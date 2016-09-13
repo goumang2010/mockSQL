@@ -32,9 +32,9 @@
 </template>
 
 <script>
-  import store from 'src/vuex/store'
+    import store from 'src/vuex/store';
 
-  export default {
-    store
-  }
+    export default {
+        store
+    };
 </script>
