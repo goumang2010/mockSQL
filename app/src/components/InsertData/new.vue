@@ -1,62 +1,70 @@
 <template>
     <div class="content-new">
-        <h3>新建任务</h3>
-        <hr>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="name" class="control-label">数据表</label>
-                <div  class="group-col">
-                    <input 
-                    type="text" 
-                    class="form-control" 
-                    id="name" 
-                    v-model="taskInfo.tbname" 
-                    placeholder="填写数据表名称，默认为table_name">
-                </div>
+    <h3>新建任务</h3>
+    <hr>
+    <div class="left">
+        <div class="form-group">
+            <label for="name" class="control-label">数据表</label>
+            <div  class="group-col">
+                <input 
+                type="text" 
+                class="form-control" 
+                id="name" 
+                v-model="taskInfo.tbname" 
+                placeholder="填写数据表名称，默认为table_name">
             </div>
-            <div class="form-group">
-                <label for="modelType" class="control-label">设备类型</label>
-                <div class="group-col">
-                    <em :class="{selected: taskInfo.modelType===0}" @click="taskInfo.modelType=0;">手机</em> 
-                    <em :class="{selected: taskInfo.modelType===1}" @click="taskInfo.modelType=1;">PC</em>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="modelType" class="control-label">设备类型</label>
+            <div class="group-col">
+                <em :class="{selected: taskInfo.modelType===0}" @click="taskInfo.modelType=0;">手机</em> 
+                <em :class="{selected: taskInfo.modelType===1}" @click="taskInfo.modelType=1;">PC</em>
             </div>
-            <div class="form-group">
-                <a class="btn btn-sm">
-                    <button type="button" class="btn btn-sm btn-default" onclick="document.querySelector('#model_select').click()">打开文件 ...</button>
-                </a>
-                &nbsp;
-                <span id="fileNameModel">{{fileName}}</span>
-                <input style="display:none" type="file" id="model_select" accept=".js,.json" @change="getFileName($event)">
+        </div>
+        <div class="form-group">
+            <a class="btn btn-sm">
+                <button type="button" class="btn btn-sm btn-default" onclick="document.querySelector('#model_select').click()">打开文件 ...</button>
+            </a>
+            &nbsp;
+            <span id="fileNameModel">{{fileName}}</span>
+            <input style="display:none" type="file" id="model_select" accept=".js,.json" @change="getFileName($event)">
+        </div>
+        <div class="form-group">
+            <label for="description" class="control-label">预制SQL</label>
+            <div class="group-col">
+                <textarea class="form-control" rows="4" id="description" v-model="taskInfo.description"></textarea>
             </div>
-            <div class="form-group">
-                <label for="description" class="control-label">预制SQL</label>
-                <div class="group-col">
-                    <textarea class="form-control" rows="4" id="description" v-model="taskInfo.description"></textarea>
-                </div>
-            </div>
-        </form>
+        </div>
         <div class="bottom-form">
             <input type="submit" value="GO" class="btn btn-success" @click="creatTask()" :class="{disabled: !(fileName)}" :disabled="(!fileName)">
             <a class="btn btn-default cancel" >取消</a>
         </div>
-        <div class="form-group">
-            <label for="output" class="control-label">结果</label>
-            <div class="group-col">
-                <textarea class="form-control" rows="4" id="output" v-model="output"></textarea>
-            </div>
+    </div>
+    <div class="right">
+        <label for="output" class="control-label">结果</label>
+        <div class="group-col">
+            <textarea class="form-control" rows="15" id="output" v-model="output"></textarea>
         </div>
+    </div>
     </div>
 
 </template>
 <style>
-    .btn-avatar{
-        background-color: #fff;
-        border-color: #e5e5e5;
-        color: #5c5c5c;
-        padding: 4px 10px;
-        font-size: 13px;
-        line-height: 18px;
+    .content-new {
+        width: calc(100% - 50px);
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .left {
+        float: left;
+        width: 300px;
+    }
+    .right {
+        float: right;
+        width: calc(100% - 350px);
+    }
+    .right textarea {
+        height: 100%;
     }
     .group-col em{
         border-radius: 4px;

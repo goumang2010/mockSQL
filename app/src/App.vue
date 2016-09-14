@@ -22,6 +22,11 @@
     justify-content: center;
     text-align: center;
   }
+
+  body > div {
+    width: 100%;
+    height: 100%;
+  } 
 </style>
 
 <template>
