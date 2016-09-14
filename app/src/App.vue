@@ -1,6 +1,5 @@
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Lato:300);
-
+  @import "~bootstrap/dist/css/bootstrap.min.css";
   * {
     margin: 0;
     padding: 0;
