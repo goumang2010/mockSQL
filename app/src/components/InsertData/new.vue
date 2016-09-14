@@ -38,7 +38,7 @@
         </form>
         <div class="bottom-form">
             <input type="submit" value="GO" class="btn btn-success" @click="creatTask()" :class="{disabled: !(fileName)}" :disabled="(!fileName)">
-            <a class="btn btn-default cancel" v-link="{name: 'listTask'}">取消</a>
+            <a class="btn btn-default cancel" >取消</a>
         </div>
         <div class="form-group">
             <label for="output" class="control-label">结果</label>
