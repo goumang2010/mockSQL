@@ -52,7 +52,7 @@
         </div>
         <div class="bottom-form">
             <input type="submit" value="复制" class="btn btn-primary" @click="copyText()">
-            <a class="btn btn-default cancel" >清空</a>
+            <a class="btn btn-default cancel" @click="output=''">清空</a>
         </div>
     </div>
     </div>
