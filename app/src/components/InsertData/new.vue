@@ -44,9 +44,15 @@
         </div>
     </div>
     <div class="right">
-        <label for="output" class="control-label">结果</label>
-        <div class="group-col">
-            <textarea class="form-control" rows="20" id="output" v-model="output"></textarea>
+        <div class="form-group">
+            <label for="output" class="control-label">结果</label>
+            <div class="group-col">
+                <textarea class="form-control" rows="20" id="output" v-model="output"></textarea>
+            </div>
+        </div>
+        <div class="bottom-form">
+            <input type="submit" value="复制" class="btn btn-primary" @click="copyText()">
+            <a class="btn btn-default cancel" >清空</a>
         </div>
     </div>
     </div>
@@ -123,6 +129,12 @@ export default {
         },
         getFileName(e) {
             this.fileName = e.target.files[0].path;
+        },
+        copyText() {
+            let $ouput = document.getElementById('output');
+            $ouput.focus();
+            $ouput.select();
+            document.execCommand('copy');
         }
     }
 };
