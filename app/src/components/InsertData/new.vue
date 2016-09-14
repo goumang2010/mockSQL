@@ -32,7 +32,7 @@
         <div class="form-group">
             <label for="description" class="control-label">预制SQL</label>
             <div class="group-col">
-                <textarea class="form-control" rows="4" id="description" v-model="taskInfo.description"></textarea>
+                <textarea class="form-control" rows="4" v-model="taskInfo.preSQL"></textarea>
             </div>
         </div>
         <div class="bottom-form">
@@ -94,7 +94,8 @@ export default {
             reportData: {},
             taskInfo: {
                 tbname: '',
-                modelType: 0
+                modelType: 0,
+                preSQL: ''
             },
             output: ''
         };
@@ -117,7 +118,7 @@ export default {
                 r: 100
             };
             let result = mockInsert(arg);
-            this.output = result.join('\n');
+            this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '')}\n${result.join('\n')}`;
         },
         getFileName(e) {
             // console.log(arguments);
