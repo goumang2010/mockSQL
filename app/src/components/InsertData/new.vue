@@ -1,0 +1,120 @@
+<template>
+    <div class="content-new">
+        <h3>新建任务</h3>
+        <hr>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="name" class="control-label">数据表</label>
+                <div  class="group-col">
+                    <input 
+                    type="text" 
+                    class="form-control" 
+                    id="name" 
+                    v-model="taskInfo.tbname" 
+                    placeholder="填写数据表名称，默认为table_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="modelType" class="control-label">设备类型</label>
+                <div class="group-col">
+                    <em :class="{selected: taskInfo.modelType===0}" @click="taskInfo.modelType=0;">手机</em> 
+                    <em :class="{selected: taskInfo.modelType===1}" @click="taskInfo.modelType=1;">PC</em>
+                </div>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-sm">
+                    <button type="button" class="btn btn-sm btn-default" onclick="document.querySelector('#model_select').click()">打开文件 ...</button>
+                </a>
+                &nbsp;
+                <span id="fileNameModel">{{fileName}}</span>
+                <input style="display:none" type="file" id="model_select" accept=".js,.json" @change="getFileName($event)">
+            </div>
+            <div class="form-group">
+                <label for="description" class="control-label">预制SQL</label>
+                <div class="group-col">
+                    <textarea class="form-control" rows="4" id="description" v-model="taskInfo.description"></textarea>
+                </div>
+            </div>
+        </form>
+        <div class="bottom-form">
+            <input type="submit" value="GO" class="btn btn-success" @click="creatTask()" :class="{disabled: !(fileName)}" :disabled="(!fileName)">
+            <a class="btn btn-default cancel" v-link="{name: 'listTask'}">取消</a>
+        </div>
+        <div class="form-group">
+            <label for="output" class="control-label">结果</label>
+            <div class="group-col">
+                <textarea class="form-control" rows="4" id="output" v-model="output"></textarea>
+            </div>
+        </div>
+    </div>
+
+</template>
+<style>
+    .btn-avatar{
+        background-color: #fff;
+        border-color: #e5e5e5;
+        color: #5c5c5c;
+        padding: 4px 10px;
+        font-size: 13px;
+        line-height: 18px;
+    }
+    .group-col em{
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        font-style: normal;
+        display: inline-block;
+        height: 22px;
+        width: 50px;
+        padding: 0 6px;
+        text-align: center;
+        margin-top: 5px;
+        margin-right: 10px;
+    }
+    em.selected {
+        border: 1px solid #449D44;
+    }
+</style>
+<script>
+import mockInsert from '../../api/mockInsert';
+export default {
+    name: 'projectNew',
+    data() {
+        return {
+            id: null,
+            fileName: '',
+            reportData: {},
+            taskInfo: {
+                tbname: '',
+                modelType: 0
+            },
+            output: ''
+        };
+    },
+    components: {
+    },
+    ready() {
+        let fileName = this.$route.query.fileName;
+        if (fileName) {
+            this.fileName = fileName;
+        }
+        // let dd = require('D:\\p\\gome\\DataPlatform\\models\\VtradeDetail.js');
+        // console.log(dd);
+    },
+    methods: {
+        async creatTask() {
+            let arg = {
+                _: [this.fileName],
+                t: this.taskInfo.tbname,
+                r: 100
+            };
+            let result = mockInsert(arg);
+            this.output = result.join('\n');
+        },
+        getFileName(e) {
+            // console.log(arguments);
+            this.fileName = e.target.files[0].path;
+        }
+    }
+};
+</script>
