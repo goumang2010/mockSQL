@@ -107,8 +107,6 @@ export default {
         if (fileName) {
             this.fileName = fileName;
         }
-        // let dd = require('D:\\p\\gome\\DataPlatform\\models\\VtradeDetail.js');
-        // console.log(dd);
     },
     methods: {
         async creatTask() {
@@ -121,7 +119,6 @@ export default {
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '')}\n${result.join('\n')}`;
         },
         getFileName(e) {
-            // console.log(arguments);
             this.fileName = e.target.files[0].path;
         }
     }
