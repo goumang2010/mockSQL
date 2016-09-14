@@ -1,5 +1,5 @@
 import randomstring from 'randomstring';
-import {getSchema, formatDate} from '../util/fs';
+import {getSchema, formatDate} from '../util/common';
 
 export default function(argv) {
     let i = 0;
