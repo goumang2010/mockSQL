@@ -119,7 +119,7 @@ export default {
                 r: 100
             };
             let result = mockInsert(arg);
-            this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '')}\n${result.join('\n')}`;
+            this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
         },
         getFileName(e) {
             this.fileName = e.target.files[0].path;
