@@ -22,17 +22,20 @@
             </div>
         </div>
         <div class="form-group">
-            <a class="btn btn-sm">
-                <button type="button" class="btn btn-sm btn-default" onclick="document.querySelector('#model_select').click()">打开文件 ...</button>
-            </a>
-            &nbsp;
-            <span id="fileNameModel">{{fileName}}</span>
-            <input style="display:none" type="file" id="model_select" accept=".js,.json" @change="getFileName($event)">
+            <label class="control-label">模型选择</label>
+            <div class="group-col">
+                <a class="btn btn-sm">
+                    <button type="button" class="btn btn-sm btn-default" onclick="document.querySelector('#model_select').click()">打开文件 ...</button>
+                </a>
+                &nbsp;
+                <span id="fileNameModel">{{fileName}}</span>
+                <input style="display:none" type="file" id="model_select" accept=".js,.json" @change="getFileName($event)">
+            </div>
         </div>
         <div class="form-group">
             <label for="description" class="control-label">预制SQL</label>
             <div class="group-col">
-                <textarea class="form-control" rows="4" v-model="taskInfo.preSQL"></textarea>
+                <textarea class="form-control" rows="8" v-model="taskInfo.preSQL"></textarea>
             </div>
         </div>
         <div class="bottom-form">
@@ -43,7 +46,7 @@
     <div class="right">
         <label for="output" class="control-label">结果</label>
         <div class="group-col">
-            <textarea class="form-control" rows="15" id="output" v-model="output"></textarea>
+            <textarea class="form-control" rows="20" id="output" v-model="output"></textarea>
         </div>
     </div>
     </div>
