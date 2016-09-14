@@ -9,7 +9,6 @@
     "vue-electron": "^1.0.0",
     "vue-resource": "^0.7.0",
     "vue-router": "next",
-    "vue-validator": "^2.1.7",
     "vuex": "next"
   },
   "devDependencies": {},
