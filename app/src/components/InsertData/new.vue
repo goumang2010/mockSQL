@@ -48,7 +48,7 @@
                 </div>
                 <span class="se-btn">
                     <label>数值</label>
-                    <input type="checkbox"> 
+                    <input type="checkbox" value="numeric" v-model="curField.type"> 
                     <a href="javascript:;" class="se-btn-a" @click="addField()"><i></i></a>
                 </span>
                 
@@ -208,7 +208,8 @@ export default {
             reportData: {},
             curField: {
                 name: '',
-                value: ''
+                value: '',
+                type: []
             },
             taskInfo: {
                 tbname: '',
@@ -233,6 +234,7 @@ export default {
                 _: [this.fileName],
                 t: this.taskInfo.tbname,
                 f: this.taskInfo.modelType,
+                filter: this.taskInfo.fixedFields,
                 r: 100
             };
             let result = mockInsert(arg);
@@ -266,6 +268,7 @@ export default {
         addField() {
             let cur = Object.assign({}, this.curField);
             if (cur.name !== '' && cur.value !== '') {
+                cur.type = cur.type[0];
                 let valobj = this.taskInfo.fixedFields.find(x => x.name === cur.name);
                 if (valobj) {
                     valobj.value = cur.value;

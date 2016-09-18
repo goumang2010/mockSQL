@@ -1,13 +1,34 @@
 import randomstring from 'randomstring';
 import {getModule, getContent, formatDate} from '../util/common';
 
-function mockData(i, tbname, schema) {
+function formatValue(type, value) {
+    if (type !== 'numeric') {
+        value = `'${value}'`;
+    } else {
+        value = `${value}`;
+    }
+    return value;
+}
+function mockData(i, tbname, schema, filter) {
     let keyArray = [];
     let valueArray = [];
     Object.keys(schema).forEach(key => {
         keyArray.push(key);
         let schemaKey = schema[key];
-        valueArray.push(getValue(i, schemaKey));
+        let fixedObj = filter.find(x => x.name === schemaKey);
+        if (fixedObj) {
+            let valobj = fixedObj.value.split(',');
+            let len = valobj.length;
+            let val;
+            if (len === 1) {
+                val = formatValue(fixedObj.type, valobj[0]);
+            } else {
+                val = formatValue(fixedObj.type, valobj[Math.floor(Math.random() * len)]);
+            }
+            valueArray.push(val);
+        } else {
+            valueArray.push(getValue(i, schemaKey));
+        }
     });
     return `INSERT INTO ${tbname} (${keyArray.join(',')}) VALUES (${valueArray.join(',')});`;
 }
@@ -79,12 +100,13 @@ export default function(argv) {
         processPath = getModule;
         break;
     }
+    let filter = argv.filter;
     argv._.forEach((x) => {
         let schema = processPath(x);
         let times = parseInt(argv.r) || 10;
         try {
             for (i = 0; i < times; i++) {
-                let res = mockData(i, tbname, schema);
+                let res = mockData(i, tbname, schema, filter);
                 result.push(res);
             }
         } catch (err) {
