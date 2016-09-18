@@ -48,7 +48,7 @@ function convertSQLtoSchema(input) {
     let output = {};
     while ((matches = regex.exec(input))) {
         let type = matches[2].toLowerCase();
-        if (type.includes('int')) {
+        if (type.includes('int') || type.includes('float')) {
             type = Number;
         } else if (type.includes('char')) {
             type = String;
