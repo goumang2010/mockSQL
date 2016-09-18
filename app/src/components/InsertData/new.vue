@@ -15,13 +15,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="modelType" class="control-label">设备类型</label>
-            <div class="group-col">
-                <em :class="{selected: taskInfo.modelType===0}" @click="taskInfo.modelType=0;">手机</em> 
-                <em :class="{selected: taskInfo.modelType===1}" @click="taskInfo.modelType=1;">PC</em>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label">模型选择</label>
             <div class="group-col">
                 <a class="btn btn-sm">
@@ -29,7 +22,15 @@
                 </a>
                 &nbsp;
                 <span id="fileNameModel">{{fileName}}</span>
-                <input style="display:none" type="file" id="model_select" accept=".js,.json" @change="getFileName($event)">
+                <input style="display:none" type="file" id="model_select" accept=".js,.json,.sql" @change="getFileName($event)">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="modelType" class="control-label">模型类型</label>
+            <div class="group-col">
+                <em :class="{selected: taskInfo.modelType===0}" @click="taskInfo.modelType=0;">模块</em> 
+                <em :class="{selected: taskInfo.modelType===1}" @click="taskInfo.modelType=1;">JSON</em>
+                <em :class="{selected: taskInfo.modelType===2}" @click="taskInfo.modelType=2;">sql</em>
             </div>
         </div>
         <div class="form-group">
@@ -94,6 +95,7 @@
 </style>
 <script>
 import mockInsert from '../../api/mockInsert';
+import path from 'path';
 export default {
     name: 'projectNew',
     data() {
@@ -122,13 +124,30 @@ export default {
             let arg = {
                 _: [this.fileName],
                 t: this.taskInfo.tbname,
+                f: this.taskInfo.modelType,
                 r: 100
             };
             let result = mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
         },
         getFileName(e) {
-            this.fileName = e.target.files[0].path;
+            let filename = e.target.files[0].path;
+            this.fileName = filename;
+            let extname = path.extname(filename).toLowerCase();
+            switch (extname) {
+            case '.js':
+                this.taskInfo.modelType = 0;
+                break;
+            case '.sql':
+                this.taskInfo.modelType = 2;
+                break;
+            case '.json':
+                this.taskInfo.modelType = 1;
+                break;
+            default:
+                break;
+            }
+            this.fileName = filename;
         },
         copyText() {
             let $ouput = document.getElementById('output');
