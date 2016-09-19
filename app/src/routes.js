@@ -1,7 +1,7 @@
 export default [
     {
         path: '/',
-        name: 'test',
+        name: 'newTask',
         component: require('components/InsertData/new')
     },
     {
