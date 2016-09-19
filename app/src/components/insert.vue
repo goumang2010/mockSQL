@@ -80,7 +80,7 @@
     </div>
 
 </template>
-<style>
+<style scoped>
     .content-new {
         width: calc(100% - 50px);
         margin: 0 auto;
@@ -132,7 +132,7 @@
         border: 1px solid #ccc;
     }
     .se-btn-a i {
-        background: url('../../assets/img/newAdd.png') no-repeat;
+        background: url('../assets/img/newAdd.png') no-repeat;
         display: block;
         width: 15px;
         height: 10px;
@@ -183,7 +183,7 @@
         border-left: 1px solid #4a7bb6;
     }
     .fixed-field ul i b {
-        background: url('../../assets/img/newAdd.png') no-repeat;
+        background: url('../assets/img/newAdd.png') no-repeat;
         background-position: 0 -11px; 
         display: inline-block;
         float: left;
@@ -197,7 +197,7 @@
     }
 </style>
 <script>
-import mockInsert from '../../api/mockInsert';
+import mockInsert from '../api/mockInsert';
 import path from 'path';
 export default {
     name: 'projectNew',

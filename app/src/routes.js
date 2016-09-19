@@ -1,8 +1,13 @@
 export default [
     {
         path: '/',
-        name: 'newTask',
-        component: require('components/InsertData/new')
+        name: 'insert',
+        component: require('components/insert')
+    },
+    {
+        path: '/update',
+        name: 'update',
+        component: require('components/update')
     },
     {
         path: '*',

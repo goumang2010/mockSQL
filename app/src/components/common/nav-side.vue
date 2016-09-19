@@ -1,17 +1,17 @@
 <template>
-    <div class="side-nav-con" :class="{'side-close': !sideNavShow}">
+    <div class="side-nav-con">
         <ul class="nav navbar-nav side-nav">
-            <li :class="{'active': isActive === 'insert'}">
-                <a v-link="{name: 'newTask'}"><i class="fa fa-fw fa-plus"></i>插入</a>
+            <li>
+                <router-link to="/" :class="{'active': !isActive}"><i class="fa fa-fw fa-plus"></i>插入</router-link>
             </li>
-            <li :class="{'active': isActive === 'update'}">
-                <a><i class="fa fa-fw fa-pencil-square-o"></i>更新</a>
+            <li>
+                <router-link to="/update" :class="{'active': isActive === 'update'}"><i class="fa fa-fw fa-pencil-square-o"></i>更新</router-link>
             </li>
-            <li :class="{'active': isActive === 'history'}">
-                <a><i class="fa fa-fw fa-history"></i>历史</a>
+            <li>
+                <a :class="{'active': isActive === 'history'}"><i class="fa fa-fw fa-history"></i>历史</a>
             </li>
-            <li :class="{'active': isActive === 'help'}">
-                <a><i class="fa fa-fw fa-question-circle-o"></i>帮助</a>
+            <li>
+                <a :class="{'active': isActive === 'help'}"><i class="fa fa-fw fa-question-circle-o"></i>帮助</a>
             </li>
         </ul>
     </div>
@@ -45,6 +45,7 @@
 }
 
 .side-nav li a:hover,
+.active,
 .side-nav li a:focus {
     outline: none;
     background-color: #000 !important;
@@ -91,8 +92,9 @@ export default {
         '$route.path': {
             handler: function() {
                 try {
-                    this.isActive = this.$route.path.match(/\/(\w+)\//)[1];
+                    this.isActive = this.$route.path.match(/\/(\w+)?\/?/)[1];
                 } catch (e) {
+                    console.log(e);
                     this.isActive = '';
                 }
             },
