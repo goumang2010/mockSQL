@@ -15,7 +15,7 @@ function mockData(i, tbname, schema, filter) {
     Object.keys(schema).forEach(key => {
         keyArray.push(key);
         let schemaKey = schema[key];
-        let fixedObj = filter.find(x => x.name === schemaKey);
+        let fixedObj = filter.find(x => x.name === key);
         if (fixedObj) {
             let valobj = fixedObj.value.split(',');
             let len = valobj.length;
