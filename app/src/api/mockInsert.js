@@ -101,9 +101,9 @@ export default function(argv) {
         break;
     }
     let filter = argv.filter;
+    let times = parseInt(argv.r) || 10;
     argv._.forEach((x) => {
         let schema = processPath(x);
-        let times = parseInt(argv.r) || 10;
         try {
             for (i = 0; i < times; i++) {
                 let res = mockData(i, tbname, schema, filter);
