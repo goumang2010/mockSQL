@@ -29,20 +29,24 @@
     height: 100%;
   } 
   .mask-custom {
-    background-color: #000;
-    opacity: 0.3;
+    background-color: #337ab7;
+    opacity: 0.2;
     min-height: 70px;
     margin-bottom: 20px;
   }
   .page-wrapper {
     padding-top: 70px;
   }
+  .navbar-inverse {
+    background-color: transparent;
+    border-color: transparent;
+}
 </style>
 
 <template>
   <div>
     <div class="navbar-fixed-top mask-custom"> </div>
-      <nav class="navbar navbar-fixed-top navbar-custom">
+      <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
         <nav-side></nav-side>
       </nav>
       <div class="page-wrapper">

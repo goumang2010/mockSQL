@@ -1,19 +1,29 @@
 <template>
-    <div class="side-nav-con">
-        <ul class="nav navbar-nav side-nav">
-            <li>
-                <router-link to="/" :class="{'active': !isActive}"><i class="fa fa-fw fa-plus"></i>插入</router-link>
-            </li>
-            <li>
-                <router-link to="/update" :class="{'active': isActive === 'update'}"><i class="fa fa-fw fa-pencil-square-o"></i>更新</router-link>
-            </li>
-            <li>
-                <a :class="{'active': isActive === 'history'}"><i class="fa fa-fw fa-history"></i>历史</a>
-            </li>
-            <li>
-                <a :class="{'active': isActive === 'help'}"><i class="fa fa-fw fa-question-circle-o"></i>帮助</a>
-            </li>
-        </ul>
+    <div>
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <b class="navbar-brand">MockSQL</b>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <router-link to="/" :class="{'active': !isActive}"><i class="fa fa-fw fa-plus"></i>插入</router-link>
+                </li>
+                <li>
+                    <router-link to="/update" :class="{'active': isActive === 'update'}"><i class="fa fa-fw fa-pencil-square-o"></i>更新</router-link>
+                </li>
+                <li>
+                    <a :class="{'active': isActive === 'history'}"><i class="fa fa-fw fa-history"></i>历史</a>
+                </li>
+                <li>
+                    <a :class="{'active': isActive === 'help'}"><i class="fa fa-fw fa-question-circle-o"></i>帮助</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 <style scoped>
@@ -21,14 +31,9 @@
     margin-right: 10px;
     margin-left: -10px;
 }
-.side-nav-con {
-    position: relative;
-    overflow-x: hidden;
-    -webkit-transition: all ease 0.2s;
-    transition: all ease 0.2s;
-    padding-left: 40px;
+.navbar-brand {
+    margin-top: 10px;
 }
-
 .side-nav {
     height: 100%;
     border-radius: 0;
@@ -37,9 +42,9 @@
 }
 
 .side-nav>li>a {
-    width: 180px;
-    background-color: rgba(0, 0, 0, 0.3);
-    color: #ddd;
+    min-width: 150px;
+    background-color: #9d9d9d;
+    color: #eee;
     margin: 10px 5px;
     cursor: pointer;
 }
@@ -49,6 +54,7 @@
 .side-nav li a:focus {
     outline: none;
     background-color: #000 !important;
+    opacity: 0.8;
     color: #eee;
 }
 
@@ -71,8 +77,13 @@
 <script>
 import actions from 'actions';
 import store from 'store';
+import jQuery from 'jquery';
 export default {
     name: 'nav-slide',
+    mounted() {
+        window.jQuery = jQuery;
+        require('bootstrap/js/collapse.js');
+    },
     data() {
         return {
             isActive: ''
