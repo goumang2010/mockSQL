@@ -10,7 +10,7 @@
                 type="text" 
                 class="form-control" 
                 id="name" 
-                v-model="taskInfo.tbname" 
+                v-model="tableName" 
                 placeholder="填写数据表名称，默认为table_name">
             </div>
         </div>
@@ -29,15 +29,15 @@
                 </span>
                 
                 <ul class="form-control">
-                    <li v-for = "(item, index) in taskInfo.fixedFields">
+                    <li v-for = "(item, index) in updateFields">
                         <span>{{item.name}}:{{item.value}}</span>
-                        <i @click = "taskInfo.fixedFields.splice(index, 1)"><b></b></i>
+                        <i @click = "updateFields.splice(index, 1)"><b></b></i>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="bottom-form">
-            <input type="submit" value="GO" class="btn btn-success" @click="creatTask()" :class="{disabled: !(fileName)}" :disabled="(!fileName)">
+            <input type="submit" value="GO" class="btn btn-success" @click="creatTask()" :class="{disabled: !(updateFields.length)}" :disabled="(!updateFields.length)">
             <a class="btn btn-default cancel" >取消</a>
         </div>
     </div>
@@ -151,38 +151,34 @@
     }
 </style>
 <script>
-import path from 'path';
+import mockUpdate from '../api/mockUpdate';
 export default {
     name: 'projectNew',
     data() {
         return {
             id: null,
-            fileName: '',
+            tableName: '',
             reportData: {},
             curField: {
                 name: '',
                 value: '',
                 type: []
             },
-            taskInfo: {
-                tbname: '',
-                modelType: 0,
-                preSQL: '',
-                fixedFields: []
-            },
+            updateFields: [],
             output: ''
         };
     },
     components: {
     },
-    ready() {
-        let fileName = this.$route.query.fileName;
-        if (fileName) {
-            this.fileName = fileName;
-        }
-    },
     methods: {
         async creatTask() {
+            let arg = {
+                t: this.tableName,
+                filter: this.updateFields,
+                r: 100
+            };
+            let result = mockUpdate(arg);
+            this.output = `${result.join('\n')}`;
         },
         copyText() {
             let $ouput = document.getElementById('output');
@@ -194,11 +190,11 @@ export default {
             let cur = Object.assign({}, this.curField);
             if (cur.name !== '' && cur.value !== '') {
                 cur.type = cur.type[0];
-                let valobj = this.taskInfo.fixedFields.find(x => x.name === cur.name);
+                let valobj = this.updateFields.find(x => x.name === cur.name);
                 if (valobj) {
                     valobj.value = cur.value;
                 } else {
-                    this.taskInfo.fixedFields.push(cur);
+                    this.updateFields.push(cur);
                 }
             }
         }
