@@ -50,7 +50,9 @@
         <nav-side></nav-side>
       </nav>
       <div class="page-wrapper">
-        <router-view></router-view>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
       </div>
   </div>
 </template>
