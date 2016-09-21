@@ -244,6 +244,10 @@ export default {
             let filename = e.target.files[0].path;
             this.fileName = filename;
             let extname = path.extname(filename).toLowerCase();
+            let basename = path.basename(filename, extname);
+            if (this.taskInfo.tbname === '') {
+                this.taskInfo.tbname = basename;
+            }
             switch (extname) {
             case '.js':
                 this.taskInfo.modelType = 0;
