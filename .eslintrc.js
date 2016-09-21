@@ -6,7 +6,8 @@ module.exports = {
   },
   extends: 'standard',
   plugins: [
-    'html'
+    'html',
+    'babel'
   ],
   env: {
     node: true,
@@ -26,6 +27,16 @@ module.exports = {
       'defaultAssignment': false
     }],
     'arrow-parens': 0,
+    'new-cap': 0,
+    'babel/generator-star-spacing': 1,
+    'babel/new-cap': 1,
+    'babel/array-bracket-spacing': 1,
+    'babel/object-curly-spacing': 0,
+    'babel/object-shorthand': 1,
+    'babel/arrow-parens': 1,
+    'babel/no-await-in-loop': 1,
+    'babel/flow-object-type': 1,
+    'babel/func-params-comma-dangle': 1,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
 }
