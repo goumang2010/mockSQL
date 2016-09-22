@@ -199,12 +199,15 @@
 <script>
 import mockInsert from '../api/mockInsert';
 import path from 'path';
+import getTasks from '../api/task';
+
 export default {
     name: 'projectNew',
     data() {
         return {
             id: null,
             fileName: '',
+            tasks: null,
             reportData: {},
             curField: {
                 name: '',
@@ -222,11 +225,8 @@ export default {
     },
     components: {
     },
-    ready() {
-        let fileName = this.$route.query.fileName;
-        if (fileName) {
-            this.fileName = fileName;
-        }
+    async mounted() {
+        this.tasks = await getTasks();
     },
     methods: {
         async creatTask() {
@@ -239,6 +239,12 @@ export default {
             };
             let result = mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
+            this.tasks.add({
+                type: 'insert',
+                tbname: arg.t,
+                date: Date.now(),
+                argv: arg
+            });
         },
         getFileName(e) {
             let filename = e.target.files[0].path;
