@@ -152,6 +152,7 @@
 </style>
 <script>
 import mockUpdate from '../api/mockUpdate';
+import getTasks from '../api/task';
 export default {
     name: 'projectNew',
     data() {
@@ -168,6 +169,9 @@ export default {
             output: ''
         };
     },
+    async mounted() {
+        this.tasks = await getTasks();
+    },
     components: {
     },
     methods: {
@@ -179,6 +183,12 @@ export default {
             };
             let result = mockUpdate(arg);
             this.output = `${result.join('\n')}`;
+            this.tasks.add({
+                type: 'update',
+                tbname: arg.t,
+                date: Date.now(),
+                argv: arg
+            });
         },
         copyText() {
             let $ouput = document.getElementById('output');
