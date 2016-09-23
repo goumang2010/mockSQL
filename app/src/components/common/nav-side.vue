@@ -17,7 +17,7 @@
                     <router-link to="/update" :class="{'active': isActive === 'update'}"><i class="fa fa-fw fa-pencil-square-o"></i>更新</router-link>
                 </li>
                 <li>
-                    <a :class="{'active': isActive === 'history'}"><i class="fa fa-fw fa-history"></i>历史</a>
+                    <router-link to="/history" :class="{'active': isActive === 'history'}"><i class="fa fa-fw fa-history"></i>历史</router-link>
                 </li>
                 <li>
                     <a :class="{'active': isActive === 'help'}"><i class="fa fa-fw fa-question-circle-o"></i>帮助</a>
@@ -101,7 +101,7 @@ export default {
     },
     watch: {
         '$route.path': {
-            handler: function() {
+            handler() {
                 try {
                     this.isActive = this.$route.path.match(/\/(\w+)?\/?/)[1];
                 } catch (e) {
