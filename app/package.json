@@ -11,10 +11,12 @@
     "randomstring": "^1.1.5",
     "vue": "next",
     "vue-electron": "^1.0.0",
+    "vue-pagination": "^0.3.3",
     "vue-resource": "^0.7.0",
     "vue-router": "next",
     "vuex": "next"
   },
-  "devDependencies": {},
+  "devDependencies": {
+  },
   "author": "goumang2010 <goumang2010@live.com>"
 }
