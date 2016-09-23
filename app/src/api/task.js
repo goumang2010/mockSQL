@@ -3,7 +3,7 @@ const storage = require('electron-json-storage');
 function cacheGet(target, name, descriptor) {
     var oldFunc = descriptor.value;
     descriptor.value = async function(...argv) {
-        let cachekey = name + argv.join('-');
+        let cachekey = name + JSON.stringify(argv);
         if (cachekey in this.cache) {
             return this.cache[cachekey];
         } else {
