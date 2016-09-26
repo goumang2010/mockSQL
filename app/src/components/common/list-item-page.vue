@@ -45,7 +45,7 @@
             </div>
         </li>
     </ul>
-    <v-pagination :pagination-config.sync="paginationConf" v-if="paginationConf.totalItems > 10"></v-pagination>
+    <v-pagination :pagination-config.sync="paginationConf" v-if="paginationConf.totalItems > 8"></v-pagination>
 </div>
 </template>
 
@@ -212,7 +212,7 @@ export default {
             showSortDropDown: false,
             paginationConf: {
                 currentPage: 1,
-                itemsPerPage: 10,
+                itemsPerPage: 8,
                 pagesLength: 5,
                 totalItems: 0,
                 onChange() {}
