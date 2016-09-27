@@ -13,10 +13,10 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-align-right dropdown-menu-selectable" v-show="showSortDropDown">
                     <li class="dropdown-header">排序</li>
-                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'name', orderBy: 'asc'})">名称顺序</a></li>
-                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'name', orderBy: 'desc'})">名称倒序</a></li>
-                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'updatetime', orderBy: 'asc'})">时间顺序</a></li>
-                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'updatetime', orderBy: 'desc'})">时间倒序</a></li>
+                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'sortname', orderBy: 'asc'})">名称顺序</a></li>
+                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'sortname', orderBy: 'desc'})">名称倒序</a></li>
+                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'sorttime', orderBy: 'asc'})">时间顺序</a></li>
+                    <li><a href="javascript:void(0)" @click="selectChange({sortBy: 'sorttime', orderBy: 'desc'})">时间倒序</a></li>
                 </ul>
             </div>
             <a v-if="this.type === 'project'" class="btn btn-sm btn-success"><i class="fa fa-plus"></i>新建项目</a>
@@ -217,15 +217,15 @@ export default {
                 totalItems: 0,
                 onChange() {}
             },
-            sortText: '时间倒序',
+            sortText: '',
             listData: [],
             selectedParams: {},
             reset: false,
             queryParam: {
                 keyword: '',
                 page: 1,
-                sortBy: '',
-                orderBy: '',
+                sortBy: 'sorttime',
+                orderBy: 'desc',
                 type: 'all'
             }
         };
@@ -242,18 +242,9 @@ export default {
                 param: {}
             },
             pagination: {
-                fn: (param) => {
-                    if (param.orderBy && param.sortBy) {
-                        param.sort = {};
-                        param.sort[this.map[param.sortBy]] = param.orderBy === 'asc' ? 1 : -1;
-                        delete param.orderBy;
-                        delete param.sortBy;
-                    }
-                    return tasks.pagination(param);
-                },
+                fn: (param) => tasks.pagination(param),
                 param: {
                     'select': '',
-                    'sort': {'_updatedAt': -1},
                     'limit': this.paginationConf.itemsPerPage,
                     'page': 1
                 }
@@ -303,15 +294,19 @@ export default {
         },
         parseQuery(params) {
             Object.assign(this.selectedParams, params);
-            // let {page, limit, skip, type, keyword} = this.selectedParams;
+            let {page, limit, skip, type, keyword, sortBy, orderBy} = this.selectedParams;
+            let trimed = {page, limit, skip, type, keyword, sortBy, orderBy};
             // this.selectedParams = {page, limit, skip, type, keyword};
-            this.fetchData(this.selectedParams);
+            if (trimed.sortBy) {
+                trimed.sortBy = this.map[trimed.sortBy];
+            }
+            this.fetchData(trimed);
         },
         setUi(params) {
             this.paginationConf.currentPage = params.page;
-            if (params.sortBy === 'name') {
+            if (params.sortBy === 'sortname') {
                 this.sortText = (params.orderBy === 'desc' ? '名称倒序' : '名称顺序');
-            } else if (params.sortBy === 'time') {
+            } else if (params.sortBy === 'sorttime') {
                 this.sortText = (params.orderBy === 'desc' ? '时间倒序' : '时间顺序');
             }
             this.tablink.currentType = params.type;
@@ -320,9 +315,9 @@ export default {
             this.queryParam.sortBy = params.sortBy;
             this.queryParam.orderBy = params.orderBy;
             this.paginationConf.currentPage = 1;
-            if (params.sortBy === 'name') {
+            if (params.sortBy === 'sortname') {
                 this.sortText = (params.orderBy === 'desc' ? '名称倒序' : '名称顺序');
-            } else if (params.sortBy === 'updatetime') {
+            } else if (params.sortBy === 'sorttime') {
                 this.sortText = (params.orderBy === 'desc' ? '时间倒序' : '时间顺序');
             }
         },

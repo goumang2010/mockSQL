@@ -31,15 +31,18 @@ function getQueryFilter({type, keyword}) {
     return new Function('x', funStr);
 }
 
-// function getQuerySorter({sortBy, orderBy}) {
-//     let res = 0;
-//     if (sortBy && orderBy) {
-//         return (a, b) => {
-
-//             return res;
-//         };
-//     }
-// }
+function getQuerySorter({sortBy, orderBy}) {
+    let res = 0;
+    if (sortBy && orderBy) {
+        if (orderBy === 'asc') {
+            return (a, b) => (a[sortBy] > b[sortBy] ? 1 : -1);
+        } else {
+            return (a, b) => (b[sortBy] > a[sortBy] ? 1 : -1);
+        }
+    } else {
+        return (a, b) => 0;
+    }
+}
 
 class Tasks {
     constructor() {
@@ -91,9 +94,10 @@ class Tasks {
     @cacheGet
     pagination({page = 1, limit = 10, skip = 0, type, keyword, sortBy, orderBy}) {
         let filter = getQueryFilter({type, keyword});
+        let sorter = getQuerySorter({sortBy, orderBy});
         let start = skip + (page - 1) * limit;
         let end = start + limit;
-        return this.list.filter(filter).slice(start, end);
+        return this.list.filter(filter).sort(sorter).slice(start, end);
     }
 
     async save() {

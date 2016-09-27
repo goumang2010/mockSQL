@@ -17,6 +17,8 @@ export default {
                 desc: 'desc',
                 userInfo: '',
                 updatetime: 'date',
+                sortname: 'tbname',
+                sorttime: 'date',
                 avatar: ''
             },
             tablink: {
