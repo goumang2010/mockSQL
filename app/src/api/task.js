@@ -49,7 +49,7 @@ function getQuerySorter({sortBy, orderBy}) {
 }
 
 export class Task {
-    constructor({type, tbname, argv}) {
+    constructor({type, tbname = '', argv}) {
         this.uuid = this.genUUID();
         this.date = Date.now();
         this.type = type;
