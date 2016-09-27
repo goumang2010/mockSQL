@@ -12,6 +12,8 @@ function cacheGet(target, name, descriptor) {
             return res;
         }
     };
+    descriptor.writable = false;
+    descriptor.configurable = false;
     return descriptor;
 }
 
@@ -21,6 +23,8 @@ function cacheSet(target, name, descriptor) {
         this.cache = {};
         return await oldFunc.apply(this, argv);
     };
+    descriptor.writable = false;
+    descriptor.configurable = false;
     return descriptor;
 }
 
