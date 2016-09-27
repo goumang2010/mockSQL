@@ -6,7 +6,7 @@
 </template>
 <script>
 import listItemPage from './common/list-item-page.vue';
-import getTasks from '../api/task';
+import {getTasks} from '../api/task';
 
 export default {
     data() {

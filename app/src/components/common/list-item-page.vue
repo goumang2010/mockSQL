@@ -29,7 +29,7 @@
         <li v-for="(item,index) of listData">
             <div class="btn-group" v-show="tablink.currentType !== 'deleted'">
                 <button type="button" class="btn btn-sm btn-success" @click="editItem(item)">编辑</button>
-                <button type="button" class="btn btn-sm btn-danger" @click="deleteItem(item)">删除</button>
+                <button type="button" class="btn btn-sm btn-danger" @click="deleteItem(item, index)">删除</button>
             </div>
             <div class="title">
                 <a href="javascript:void(0)" @click="itemDetail(item)">
@@ -250,7 +250,7 @@ export default {
                 }
             },
             delete: {
-                fn: tasks.deleteTasks
+                fn: (param) => tasks.deleteItem(param)
             }
         };
         $('html')[0].on('click', (e) => {
@@ -323,7 +323,13 @@ export default {
         },
         editItem(item) {
         },
-        deleteItem(item) {
+        async deleteItem(item, index) {
+            try {
+                await this.api.delete.fn(item);
+            } catch (e) {
+                console.log(e);
+            }
+            this.listData.splice(index, 1);
         },
         queryHandler() {
             if (isEmptyObject(this.queryParam)) {
