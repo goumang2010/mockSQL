@@ -24,6 +24,19 @@ function cacheSet(target, name, descriptor) {
     return descriptor;
 }
 
+function getQueryFilter({type, keyword}) {
+    return x => {
+        let pass = true;
+        if (type && type !== 'all' && x.type !== type) {
+            pass = false;
+        }
+        if (keyword && !(x.tbname.includes(keyword))) {
+            pass = false;
+        }
+        return pass;
+    };
+}
+
 class Tasks {
     constructor() {
         this.cache = {};
@@ -45,8 +58,9 @@ class Tasks {
     }
 
     @cacheGet
-    count() {
-        return this.list.length;
+    count({type, keyword}) {
+        let filter = getQueryFilter({type, keyword});
+        return this.list.filter(filter).length;
     }
 
     // task = {
@@ -70,7 +84,8 @@ class Tasks {
     }
 
     @cacheGet
-    pagination({page = 1, limit = 10, skip = 0, filter = x => x}) {
+    pagination({page = 1, limit = 10, skip = 0, type, keyword}) {
+        let filter = getQueryFilter({type, keyword});
         let start = skip + (page - 1) * limit;
         let end = start + limit;
         return this.list.filter(filter).slice(start, end);

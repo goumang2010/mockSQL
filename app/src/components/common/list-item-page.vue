@@ -280,7 +280,7 @@ export default {
             this.paginationConf.currentPage = 1;
             this.queryParam.type = item.tab;
         };
-        this.parseQuery();
+        this.parseQuery(this.queryParam);
         this.setUi(this.selectedParams);
     },
     methods: {
@@ -296,13 +296,15 @@ export default {
                 this.listData = res;
             })();
             (async () => {
-                console.log(selectedParams);
+                // console.log(selectedParams);
                 let res = await this.api.count.fn(selectedParams);
                 this.paginationConf.totalItems = res;
             })();
         },
-        parseQuery() {
-            Object.assign(this.selectedParams, this.queryParam);
+        parseQuery(params) {
+            Object.assign(this.selectedParams, params);
+            // let {page, limit, skip, type, keyword} = this.selectedParams;
+            // this.selectedParams = {page, limit, skip, type, keyword};
             this.fetchData(this.selectedParams);
         },
         setUi(params) {
@@ -336,7 +338,7 @@ export default {
                 this.fetchData();
                 return;
             };
-            this.parseQuery();
+            this.parseQuery(this.queryParam);
         }
     },
     watch: {
