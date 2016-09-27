@@ -45,7 +45,7 @@
             </div>
         </li>
     </ul>
-    <v-pagination :pagination-config.sync="paginationConf" v-if="paginationConf.totalItems > 8"></v-pagination>
+    <v-pagination :pagination-config.sync="paginationConf" v-if="paginationConf.totalItems > paginationConf.itemsPerPage"></v-pagination>
 </div>
 </template>
 
@@ -212,7 +212,7 @@ export default {
             showSortDropDown: false,
             paginationConf: {
                 currentPage: 1,
-                itemsPerPage: 8,
+                itemsPerPage: 7,
                 pagesLength: 5,
                 totalItems: 0,
                 onChange() {}
@@ -246,7 +246,6 @@ export default {
             },
             pagination: {
                 fn: (param) => {
-                    console.log(param);
                     if (param.orderBy && param.sortBy) {
                         param.sort = {};
                         param.sort[this.map[param.sortBy]] = param.orderBy === 'asc' ? 1 : -1;
@@ -258,7 +257,7 @@ export default {
                 param: {
                     'select': '',
                     'sort': {'_updatedAt': -1},
-                    'limit': 8,
+                    'limit': this.paginationConf.itemsPerPage,
                     'page': 1,
                     'filter': ''
                 }

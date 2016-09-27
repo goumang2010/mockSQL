@@ -24,8 +24,6 @@ const router = new Router({
 
 import './filter/index.js';
 
-
-
 /* eslint-disable no-new */
 new Vue({
     router,
