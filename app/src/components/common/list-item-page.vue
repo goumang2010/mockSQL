@@ -225,7 +225,8 @@ export default {
                 keyword: '',
                 page: 1,
                 sortBy: '',
-                orderBy: ''
+                orderBy: '',
+                type: 'all'
             }
         };
     },
@@ -237,12 +238,8 @@ export default {
         let tasks = await this.getTasks();
         this.api = {
             count: {
-                fn: (param) => {
-                    return tasks.count(param);
-                },
-                param: {
-                    'filter': ''
-                }
+                fn: (param) => tasks.count(param),
+                param: {}
             },
             pagination: {
                 fn: (param) => {
@@ -258,8 +255,7 @@ export default {
                     'select': '',
                     'sort': {'_updatedAt': -1},
                     'limit': this.paginationConf.itemsPerPage,
-                    'page': 1,
-                    'filter': ''
+                    'page': 1
                 }
             },
             delete: {
@@ -279,46 +275,35 @@ export default {
                 return;
             }
             this.queryParam.page = this.paginationConf.currentPage;
-            this.$router.push({
-                query: this.queryParam
-            });
         };
         this.tablink.onChange = (item) => {
             this.paginationConf.currentPage = 1;
-            this.tablink.currentType = item.tab;
-            this.queryHandler();
+            this.queryParam.type = item.tab;
         };
         this.parseQuery();
         this.setUi(this.selectedParams);
-        this.$watch('queryParam', this.queryHandler, {deep: true});
     },
     methods: {
         filter() {
-            this.queryParam.keyword;
             if (this.paginationConf.currentPage !== 1) {
                 this.paginationConf.currentPage = 1;
                 return;
             }
-            this.$router.push({
-                query: this.queryParam
-            });
         },
-        fetchData() {
+        fetchData(selectedParams) {
             (async () => {
-                let res = await this.api.pagination.fn(this.selectedParams);
+                let res = await this.api.pagination.fn(selectedParams);
                 this.listData = res;
             })();
             (async () => {
-                let res = await this.api.count.fn(this.selectedParams);
+                console.log(selectedParams);
+                let res = await this.api.count.fn(selectedParams);
                 this.paginationConf.totalItems = res;
             })();
         },
         parseQuery() {
             Object.assign(this.selectedParams, this.queryParam);
-            if (this.selectedParams.page) {
-                this.selectedParams.page = parseInt(this.selectedParams.page);
-            }
-            this.fetchData();
+            this.fetchData(this.selectedParams);
         },
         setUi(params) {
             this.paginationConf.currentPage = params.page;
@@ -327,7 +312,7 @@ export default {
             } else if (params.sortBy === 'time') {
                 this.sortText = (params.orderBy === 'desc' ? '时间倒序' : '时间顺序');
             }
-            this.tablink.currentType = params.groupBy;
+            this.tablink.currentType = params.type;
         },
         selectChange(params) {
             this.queryParam.sortBy = params.sortBy;
@@ -338,9 +323,6 @@ export default {
             } else if (params.sortBy === 'updatetime') {
                 this.sortText = (params.orderBy === 'desc' ? '时间倒序' : '时间顺序');
             }
-            this.$router.push({
-                query: this.queryParam
-            });
         },
         editItem(item) {
         },
@@ -355,6 +337,14 @@ export default {
                 return;
             };
             this.parseQuery();
+        }
+    },
+    watch: {
+        'queryParam': {
+            handler() {
+                return this.queryHandler();
+            },
+            deep: true
         }
     }
 };

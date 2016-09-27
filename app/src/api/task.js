@@ -70,10 +70,10 @@ class Tasks {
     }
 
     @cacheGet
-    pagination({page = 1, limit = 10, skip = 0, filterCb = x => x}) {
+    pagination({page = 1, limit = 10, skip = 0, filter = x => x}) {
         let start = skip + (page - 1) * limit;
         let end = start + limit;
-        return this.list.filter(filterCb).slice(start, end);
+        return this.list.filter(filter).slice(start, end);
     }
 
     async save() {
