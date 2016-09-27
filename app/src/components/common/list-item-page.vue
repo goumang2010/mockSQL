@@ -213,7 +213,7 @@ export default {
             paginationConf: {
                 currentPage: 1,
                 itemsPerPage: 7,
-                pagesLength: 5,
+                pagesLength: 3,
                 totalItems: 0,
                 onChange() {}
             },
@@ -283,11 +283,11 @@ export default {
         },
         fetchData(selectedParams) {
             (async () => {
+                console.log(this.paginationConf);
                 let res = await this.api.pagination.fn(selectedParams);
                 this.listData = res;
             })();
             (async () => {
-                // console.log(selectedParams);
                 let res = await this.api.count.fn(selectedParams);
                 this.paginationConf.totalItems = res;
             })();
