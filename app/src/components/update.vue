@@ -152,7 +152,7 @@
 </style>
 <script>
 import mockUpdate from '../api/mockUpdate';
-import getTasks from '../api/task';
+import {getTasks, Task} from '../api/task';
 export default {
     name: 'projectNew',
     data() {
@@ -183,12 +183,11 @@ export default {
             };
             let result = mockUpdate(arg);
             this.output = `${result.join('\n')}`;
-            this.tasks.add({
+            this.tasks.add(new Task({
                 type: 'update',
                 tbname: arg.t,
-                date: Date.now(),
                 argv: arg
-            });
+            }));
         },
         copyText() {
             let $ouput = document.getElementById('output');

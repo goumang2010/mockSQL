@@ -199,7 +199,7 @@
 <script>
 import mockInsert from '../api/mockInsert';
 import path from 'path';
-import getTasks from '../api/task';
+import {getTasks, Task} from '../api/task';
 
 export default {
     name: 'projectNew',
@@ -239,12 +239,11 @@ export default {
             };
             let result = mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
-            this.tasks.add({
+            this.tasks.add(new Task({
                 type: 'insert',
                 tbname: arg.t,
-                date: Date.now(),
                 argv: arg
-            });
+            }));
         },
         getFileName(e) {
             let filename = e.target.files[0].path;

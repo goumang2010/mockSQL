@@ -48,7 +48,23 @@ function getQuerySorter({sortBy, orderBy}) {
     }
 }
 
-class Tasks {
+export class Task {
+    constructor({type, tbname, argv}) {
+        this.uuid = this.genUUID();
+        this.date = Date.now();
+        this.type = type;
+        this.tbname = tbname;
+        this.argv = argv;
+    }
+    genUUID() {
+        var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
+        return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
+            return (Math.random() * 16 | 0).toString(16);
+        }).toLowerCase();
+    }
+}
+
+export class Tasks {
     constructor() {
         this.cache = {};
     }
@@ -85,13 +101,30 @@ class Tasks {
     // }
     @cacheSet
     async add(task) {
-        this.list.push(task);
-        await this.save();
+        if (task instanceof Task) {
+            this.list.push(task);
+            await this.save();
+        }
+    }
+
+    // delete by object or uuid
+    @cacheSet
+    async deleteItem(obj) {
+        let i;
+        if (typeof obj === 'object') {
+            i = this.list.findIndex(x => x === obj);
+        } else {
+            i = this.list.findIndex(x => x.uuid === obj);
+        }
+        if (i > -1) {
+            this.list.splice(i, 1);
+            await this.save();
+        }
     }
 
     @cacheSet
-    async delete(i) {
-        this.list.splice(i, 1);
+    async deleteAll() {
+        this.list = [];
         await this.save();
     }
 
@@ -107,7 +140,11 @@ class Tasks {
     async save() {
         return new Promise((resolve, reject) => {
             storage.set('tasklist', this.list, function(error) {
-                if (error) throw error;
+                if (error) {
+                    console.log(error);
+                    reject(error);
+                }
+                resolve();
             });
         });
     }
@@ -115,7 +152,7 @@ class Tasks {
 
 const tasks = new Tasks();
 
-export default async function getTasks() {
+exports.getTasks = async function() {
     await tasks.init();
     return tasks;
 };
