@@ -11,7 +11,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav side-nav">
                 <li>
-                    <router-link to="/" :class="{'active': !isActive}"><i class="fa fa-fw fa-plus"></i>插入</router-link>
+                    <router-link to="/insert" :class="{'active': isActive === 'insert'}"><i class="fa fa-fw fa-plus"></i>插入</router-link>
                 </li>
                 <li>
                     <router-link to="/update" :class="{'active': isActive === 'update'}"><i class="fa fa-fw fa-pencil-square-o"></i>更新</router-link>

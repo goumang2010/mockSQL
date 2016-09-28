@@ -1,6 +1,6 @@
 export default [
     {
-        path: '/',
+        path: '/insert',
         name: 'insert',
         component: require('components/insert')
     },
@@ -16,6 +16,6 @@ export default [
     },
     {
         path: '*',
-        redirect: '/'
+        redirect: '/insert'
     }
 ];
