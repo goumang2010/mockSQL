@@ -187,6 +187,7 @@ export default {
                 tbname: arg.t,
                 argv: arg
             }));
+            this.$store.dispatch('freshTasksList');
         },
         copyText() {
             let $ouput = document.getElementById('output');

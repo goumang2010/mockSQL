@@ -223,7 +223,17 @@ export default {
             output: ''
         };
     },
-    components: {
+    activated() {
+        let task = this.$store.getters.taskInfo;
+        if (task.argv) {
+            let argv = {...task.argv};
+            this.taskInfo.tbname = argv.t;
+            this.taskInfo.modelType = argv.f;
+            this.taskInfo.fixedFields = [...argv.filter];
+            this.fileName = argv._[0];
+            this.taskInfo.r = argv.r;
+            this.$store.dispatch('resetTaskInfo');
+        }
     },
     async mounted() {
     },
@@ -243,6 +253,7 @@ export default {
                 tbname: arg.t,
                 argv: arg
             }));
+            this.$store.dispatch('freshTasksList');
         },
         getFileName(e) {
             let filename = e.target.files[0].path;

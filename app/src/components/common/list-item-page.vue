@@ -350,6 +350,11 @@ export default {
                 return this.queryHandler();
             },
             deep: true
+        },
+        '$store.getters.freshListTrigger': {
+            handler() {
+                return this.queryHandler();
+            }
         }
     }
 };
