@@ -199,7 +199,7 @@
 <script>
 import mockInsert from '../api/mockInsert';
 import path from 'path';
-import {getTasks, Task} from '../api/task';
+import {tasks, Task} from '../api/task';
 
 export default {
     name: 'projectNew',
@@ -226,7 +226,6 @@ export default {
     components: {
     },
     async mounted() {
-        this.tasks = await getTasks();
     },
     methods: {
         async creatTask() {
@@ -239,7 +238,7 @@ export default {
             };
             let result = mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
-            this.tasks.add(new Task({
+            tasks.add(new Task({
                 type: 'insert',
                 tbname: arg.t,
                 argv: arg

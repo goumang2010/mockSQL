@@ -230,12 +230,12 @@ export default {
             }
         };
     },
-    props: ['type', 'map', 'tablink', 'getTasks', 'routeName'],
+    props: ['type', 'map', 'tablink', 'tasks', 'routeName'],
     components: {
         'top-tab': TopTab
     },
     async mounted() {
-        let tasks = await this.getTasks();
+        let tasks = this.tasks;
         this.api = {
             count: {
                 fn: (param) => tasks.count(param),
@@ -322,6 +322,8 @@ export default {
             }
         },
         editItem(item) {
+            this.$store.dispatch('setTaskInfo', item);
+            this.$router.push('/' + item.type);
         },
         async deleteItem(item, index) {
             try {

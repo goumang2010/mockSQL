@@ -40,7 +40,8 @@
   .navbar-inverse {
     background-color: transparent;
     border-color: transparent;
-}
+  }
+
 </style>
 
 <template>
@@ -51,7 +52,7 @@
       </nav>
       <div class="page-wrapper">
         <keep-alive>
-            <router-view></router-view>
+            <router-view class="container-fluid" ></router-view>
         </keep-alive>
       </div>
   </div>
@@ -60,11 +61,15 @@
 <script>
     import store from 'store';
     import NavSilde from './components/common/nav-side.vue';
+    import { initTasks } from './api/task.js';
 
     export default {
         store,
         components: {
             'nav-side': NavSilde
+        },
+        async mounted() {
+            await initTasks();
         }
     };
 </script>

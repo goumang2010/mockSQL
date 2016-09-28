@@ -150,9 +150,9 @@ export class Tasks {
     }
 }
 
-const tasks = new Tasks();
+export const tasks = new Tasks();
 
-exports.getTasks = async function() {
+export const initTasks = async () => {
     await tasks.init();
     return tasks;
 };

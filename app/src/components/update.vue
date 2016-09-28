@@ -152,7 +152,7 @@
 </style>
 <script>
 import mockUpdate from '../api/mockUpdate';
-import {getTasks, Task} from '../api/task';
+import {tasks, Task} from '../api/task';
 export default {
     name: 'projectNew',
     data() {
@@ -170,7 +170,6 @@ export default {
         };
     },
     async mounted() {
-        this.tasks = await getTasks();
     },
     components: {
     },
@@ -183,7 +182,7 @@ export default {
             };
             let result = mockUpdate(arg);
             this.output = `${result.join('\n')}`;
-            this.tasks.add(new Task({
+            tasks.add(new Task({
                 type: 'update',
                 tbname: arg.t,
                 argv: arg

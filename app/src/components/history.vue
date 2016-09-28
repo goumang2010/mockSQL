@@ -1,12 +1,12 @@
 <template>
     <div>
-        <list-item-page type="task" :map="map" :getTasks="getTasks" :tablink="tablink" route-name="history"></list-item-page>
+        <list-item-page type="task" :map="map" :tasks="tasks" :tablink="tablink" route-name="history"></list-item-page>
     </div>
 
 </template>
 <script>
 import listItemPage from './common/list-item-page.vue';
-import {getTasks} from '../api/task';
+import { tasks } from '../api/task';
 
 export default {
     data() {
@@ -37,7 +37,7 @@ export default {
                 }],
                 onChange: () => {}
             },
-            getTasks
+            tasks
         };
     },
     components: {
