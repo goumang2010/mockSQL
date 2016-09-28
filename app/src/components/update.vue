@@ -169,6 +169,15 @@ export default {
             output: ''
         };
     },
+    activated() {
+        let task = this.$store.getters.taskInfo;
+        if (task.argv) {
+            let argv = {...task.argv};
+            this.tableName = argv.t;
+            this.updateFields = [...argv.filter];
+            this.$store.dispatch('resetTaskInfo');
+        }
+    },
     async mounted() {
     },
     components: {
