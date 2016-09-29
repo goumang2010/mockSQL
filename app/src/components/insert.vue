@@ -1,6 +1,6 @@
 <template>
     <div class="content-new">
-    <h3>新建任务</h3>
+    <h3>伪造插入SQL</h3>
     <hr>
     <div class="left">
         <div class="form-group">
@@ -16,27 +16,26 @@
         </div>
         <div class="form-group">
             <label class="control-label">模型选择</label>
-            <div class="group-col">
-                <a class="btn btn-sm">
-                    <button type="button" class="btn btn-sm btn-default" onclick="document.querySelector('#model_select').click()">打开文件 ...</button>
-                </a>
-                &nbsp;
-                <span id="fileNameModel">{{fileName}}</span>
-                <input style="display:none" type="file" id="model_select" accept=".js,.json,.sql" @change="getFileName($event)">
+            <div class="model-sel">
+                <div class="group-col">
+                    <a class="btn btn-sm">
+                        <button type="button" class="btn btn-sm btn-default" onclick="document.querySelector('#model_select').click()">打开文件 ...</button>
+                    </a>
+                    <input style="display:none" type="file" id="model_select" accept=".js,.json,.sql" @change="getFileName($event)">
+                </div>
+                <div class="group-col model-type">
+                    <em :class="{selected: taskInfo.modelType===0}" @click="taskInfo.modelType=0;">模块</em> 
+                    <em class="disabled">JSON</em>
+                    <em :class="{selected: taskInfo.modelType===2}" @click="taskInfo.modelType=2;">sql</em>
+                </div>
+                <input type="text" class="form-control" v-model="fileName" placeholder="模型地址"></input>
             </div>
         </div>
         <div class="form-group">
-            <label for="modelType" class="control-label">模型类型</label>
+            <label for="description" class="control-label">参数设置</label>
             <div class="group-col">
-                <em :class="{selected: taskInfo.modelType===0}" @click="taskInfo.modelType=0;">模块</em> 
-                <em :class="{selected: taskInfo.modelType===1}" @click="taskInfo.modelType=1;">JSON</em>
-                <em :class="{selected: taskInfo.modelType===2}" @click="taskInfo.modelType=2;">sql</em>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="description" class="control-label">预制SQL</label>
-            <div class="group-col">
-                <textarea class="form-control" rows="2" v-model="taskInfo.preSQL"></textarea>
+                <input type="text" class="form-control" v-model="taskInfo.r" placeholder="循环次数">
+                <textarea class="form-control" style="margin-top: 10px;" rows="2" v-model="taskInfo.preSQL" placeholder="预制SQL"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -51,7 +50,6 @@
                     <input type="checkbox" value="numeric" v-model="curField.type"> 
                     <a href="javascript:;" class="se-btn-a" @click="addField()"><i></i></a>
                 </span>
-                
                 <ul>
                     <li v-for = "(item, index) in taskInfo.fixedFields">
                         <span>{{item.name}}:{{item.value}}</span>
@@ -138,6 +136,19 @@
         height: 10px;
         background-position: 0 -153px;
         margin: 9px auto;
+    }
+    .model-sel {
+        overflow: hidden;
+    }
+    .model-sel > .group-col {
+        float: left;
+    }
+    .model-sel > span {
+        float: left;
+        margin-top: 5px;
+    }
+    .model-type {
+        margin-top: 5px;
     }
     .fixed-field {
         overflow: hidden;
@@ -244,7 +255,7 @@ export default {
                 t: this.taskInfo.tbname,
                 f: this.taskInfo.modelType,
                 filter: this.taskInfo.fixedFields,
-                r: 100
+                r: this.taskInfo.r || 100
             };
             let result = mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
