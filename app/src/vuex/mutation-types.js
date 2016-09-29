@@ -8,3 +8,7 @@ export const RESET_FRESH_COUNT = 'RESET_FRESH_COUNT';
 // alert
 export const ALERT = 'ALERT';
 export const HIDEALERT = 'HIDEALERT';
+
+// popover
+export const POPOVER = 'POPOVER';
+export const HIDEPOPOVER = 'HIDEPOPOVER';

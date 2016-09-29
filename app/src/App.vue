@@ -56,6 +56,7 @@
         </keep-alive>
       </div>
       <Alert></Alert>
+      <Popover></Popover>
   </div>
 </template>
 
@@ -64,12 +65,14 @@
     import NavSilde from './components/common/nav-side.vue';
     import { initTasks } from './api/task.js';
     import Alert from './components/base/alert.vue';
+    import Popover from './components/base/popover.vue';
 
     export default {
         store,
         components: {
             'nav-side': NavSilde,
-            Alert
+            Alert,
+            Popover
         },
         async mounted() {
             await initTasks();

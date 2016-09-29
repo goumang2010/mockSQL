@@ -38,3 +38,18 @@ export const alert = ({commit}, params) => {
 export const hideAlert = ({commit}) => {
     commit(types.HIDEALERT);
 };
+
+export const popover = ({commit}, params) => {
+    commit(types.POPOVER, params);
+    if (params.delay === false) {
+        return;
+    } else {
+        setTimeout(() => {
+            commit(types.HIDEPOPOVER);
+        }, params.delay || 2500);
+    }
+};
+
+export const hidePopover = ({commit}) => {
+    commit(types.HIDEPOPOVER);
+};
