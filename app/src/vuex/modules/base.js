@@ -10,6 +10,9 @@ const state = {
     },
     popoverConfig: {
         show: false,
+        top: 0,
+        left: 0,
+        style: 'popover',
         msg: 'alert message!',
         title: 'info',
         delay: 2500,
@@ -29,11 +32,7 @@ const mutations = {
         state.alertConfig.show = false;
     },
     [types.POPOVER](state, params) {
-        state.popoverConfig.show = params.show;
-        state.popoverConfig.msg = params.title || 'popover title';
-        state.popoverConfig.msg = params.msg || 'popover msg';
-        state.popoverConfig.delay = params.delay || 2500; // false will not auto hide
-        state.popoverConfig.dismissible = params.dismissible || false;
+        Object.assign(state.popoverConfig, params);
     },
     [types.HIDEPOPOVER](state) {
         state.popoverConfig.show = false;

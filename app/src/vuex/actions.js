@@ -50,6 +50,10 @@ export const popover = ({commit}, params) => {
     }
 };
 
+export const movePopover = ({commit}, params) => {
+    commit(types.POPOVER, params);
+};
+
 export const hidePopover = ({commit}) => {
     commit(types.HIDEPOPOVER);
 };

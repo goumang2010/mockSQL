@@ -32,7 +32,7 @@
                 <button type="button" class="btn btn-sm btn-danger" @click="deleteItem(item, index)">删除</button>
             </div>
             <div class="title">
-                <a href="javascript:void(0)" @click="itemDetail(item)">
+                <a href="javascript:void(0)" @click="editItem(item)" @mouseenter="showTip(item)" @mouseover="moveTip($event)" @mouseleave="hideTip()">
                     <div class="list-item-avatar-con" v-if="item[map.avatar]">
                         <img alt="" class="list-item-avatar" :src="item[map.avatar]">
                     </div>
@@ -46,6 +46,8 @@
         </li>
     </ul>
     <v-pagination :pagination-config.sync="paginationConf" v-if="paginationConf.totalItems > paginationConf.itemsPerPage"></v-pagination>
+    <Alert></Alert>
+    <Popover></Popover>
 </div>
 </template>
 
@@ -203,6 +205,8 @@ import store from 'store';
 import TopTab from '../common/top-tab.vue';
 import { $ } from '../../util/dom.js';
 import {isEmptyObject} from '../../util/common';
+import Alert from '../base/alert.vue';
+import Popover from '../base/popover.vue';
 
 export default {
     name: 'task-list',
@@ -227,12 +231,15 @@ export default {
                 sortBy: 'sorttime',
                 orderBy: 'desc',
                 type: 'all'
-            }
+            },
+            timeoutList: []
         };
     },
     props: ['type', 'map', 'tablink', 'tasks', 'routeName'],
     components: {
-        'top-tab': TopTab
+        'top-tab': TopTab,
+        Alert,
+        Popover
     },
     async mounted() {
         let tasks = this.tasks;
@@ -320,6 +327,28 @@ export default {
             } else if (params.sortBy === 'sorttime') {
                 this.sortText = (params.orderBy === 'desc' ? '时间倒序' : '时间顺序');
             }
+        },
+        showTip(item) {
+            let text = `类型：${item.type}<br>表名：${item.tbname || '--'}<br>时间：${new Date(item.date).toLocaleString()}`;
+            let config = {
+                show: true,
+                style: 'tip',
+                delay: false,
+                msg: text
+            };
+            this.timeoutList.forEach(x => clearTimeout(x));
+            this.timeoutList = [];
+            this.$store.dispatch('popover', config);
+        },
+        moveTip(e) {
+            let config = {
+                top: e.clientY - 10,
+                left: e.clientX + 20
+            };
+            this.$store.dispatch('movePopover', config);
+        },
+        hideTip() {
+            this.timeoutList.push(setTimeout(() => this.$store.dispatch('hidePopover'), 500));
         },
         editItem(item) {
             this.$store.dispatch('setTaskInfo', item);
