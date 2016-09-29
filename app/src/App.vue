@@ -55,6 +55,7 @@
             <router-view class="container-fluid" ></router-view>
         </keep-alive>
       </div>
+      <Alert></Alert>
   </div>
 </template>
 
@@ -62,11 +63,13 @@
     import store from 'store';
     import NavSilde from './components/common/nav-side.vue';
     import { initTasks } from './api/task.js';
+    import Alert from './components/base/alert.vue';
 
     export default {
         store,
         components: {
-            'nav-side': NavSilde
+            'nav-side': NavSilde,
+            Alert
         },
         async mounted() {
             await initTasks();

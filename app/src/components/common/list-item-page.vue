@@ -351,9 +351,11 @@ export default {
             },
             deep: true
         },
-        '$store.getters.freshListTrigger': {
-            handler() {
-                return this.queryHandler();
+        '$store.getters.freshCount': {
+            handler(newValue, oldValue) {
+                if (newValue !== 0) {
+                    this.queryHandler();
+                }
             }
         }
     }

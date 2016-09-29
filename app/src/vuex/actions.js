@@ -19,3 +19,22 @@ export const resetTaskInfo = ({ commit }) => {
 export const freshTasksList = ({ commit }) => {
     commit(types.FRESH_TASKS_LIST_TRIGGER);
 };
+
+export const resetFreshCount = ({ commit }) => {
+    commit(types.RESET_FRESH_COUNT);
+};
+
+export const alert = ({commit}, params) => {
+    commit(types.ALERT, params);
+    if (params.delay === false) {
+        return;
+    } else {
+        setTimeout(() => {
+            commit(types.HIDEALERT);
+        }, params.delay || 2500);
+    }
+};
+
+export const hideAlert = ({commit}) => {
+    commit(types.HIDEALERT);
+};

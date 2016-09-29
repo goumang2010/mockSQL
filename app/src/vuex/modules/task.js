@@ -2,7 +2,7 @@ import * as types from '../mutation-types';
 
 const state = {
     currentTask: {},
-    freshListTrigger: false
+    freshCount: 0
 };
 
 const mutations = {
@@ -13,7 +13,10 @@ const mutations = {
         state.currentTask = {};
     },
     [types.FRESH_TASKS_LIST_TRIGGER](state) {
-        state.freshListTrigger = !state.freshListTrigger;
+        state.freshCount++;
+    },
+    [types.RESET_FRESH_COUNT](state) {
+        state.freshCount = 0;
     }
 };
 

@@ -42,6 +42,19 @@ export default {
     },
     components: {
         listItemPage
+    },
+    activated() {
+        let newCount = this.$store.getters.freshCount;
+        if (newCount > 0) {
+            this.$store.dispatch('alert', {
+                show: true,
+                type: 'success',
+                msg: `新增${newCount}条记录`,
+                dismissible: true,
+                delay: 1000
+            });
+            this.$store.dispatch('resetFreshCount');
+        }
     }
 };
 </script>
