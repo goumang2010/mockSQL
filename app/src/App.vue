@@ -45,16 +45,18 @@
 </style>
 
 <template>
-  <div>
-    <div class="navbar-fixed-top mask-custom"> </div>
-      <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+    <div>
+      <div class="navbar-fixed-top mask-custom"> </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
         <nav-side></nav-side>
-      </nav>
-      <div class="page-wrapper">
-        <keep-alive>
-            <router-view class="container-fluid" ></router-view>
-        </keep-alive>
-      </div>
+        </nav>
+            <div class="page-wrapper">
+                <keep-alive>
+                    <router-view class="container-fluid" ></router-view>
+                </keep-alive>
+            </div>
+        <Alert></Alert>
+        <Popover></Popover>
   </div>
 </template>
 
@@ -62,14 +64,27 @@
     import store from 'store';
     import NavSilde from './components/common/nav-side.vue';
     import { initTasks } from './api/task.js';
+    import Alert from './components/base/alert.vue';
+    import Popover from './components/base/popover.vue';
 
     export default {
         store,
         components: {
-            'nav-side': NavSilde
+            'nav-side': NavSilde,
+            Alert,
+            Popover
         },
         async mounted() {
             await initTasks();
+        },
+        watch: {
+            '$route': {
+                handler(newValue, oldValue) {
+                    // reset store
+                    this.$store.dispatch('hidePopover');
+                    this.$store.dispatch('hideAlert');
+                }
+            }
         }
     };
 </script>

@@ -46,8 +46,6 @@
         </li>
     </ul>
     <v-pagination :pagination-config.sync="paginationConf" v-if="paginationConf.totalItems > paginationConf.itemsPerPage"></v-pagination>
-    <Alert></Alert>
-    <Popover></Popover>
 </div>
 </template>
 
@@ -200,13 +198,9 @@ ul.content-list>li .btn-group {
 }
 </style>
 <script>
-import actions from 'actions';
-import store from 'store';
 import TopTab from '../common/top-tab.vue';
 import { $ } from '../../util/dom.js';
 import {isEmptyObject} from '../../util/common';
-import Alert from '../base/alert.vue';
-import Popover from '../base/popover.vue';
 
 export default {
     name: 'task-list',
@@ -237,9 +231,7 @@ export default {
     },
     props: ['type', 'map', 'tablink', 'tasks', 'routeName'],
     components: {
-        'top-tab': TopTab,
-        Alert,
-        Popover
+        'top-tab': TopTab
     },
     async mounted() {
         let tasks = this.tasks;
