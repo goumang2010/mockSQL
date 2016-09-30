@@ -255,7 +255,8 @@ export default {
                 t: this.taskInfo.tbname,
                 f: this.taskInfo.modelType,
                 filter: this.taskInfo.fixedFields,
-                r: this.taskInfo.r || 100
+                r: this.taskInfo.r || 100,
+                presql: this.presql
             };
             let result = mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;

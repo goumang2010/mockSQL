@@ -14,7 +14,13 @@
                 placeholder="填写数据表名称，默认为table_name">
             </div>
         </div>
-
+        <div class="form-group">
+            <label for="description" class="control-label">参数设置</label>
+            <div class="group-col">
+                <input type="text" class="form-control" v-model="repeat" placeholder="循环次数">
+                <textarea class="form-control" style="margin-top: 10px;" rows="2" v-model="presql" placeholder="预制SQL"></textarea>
+            </div>
+        </div>
         <div class="form-group">
             <label for="description" class="control-label">字段值</label>
             <div class="group-col fixed-field">
@@ -103,7 +109,7 @@
         overflow: hidden;
         font-size: 12px;
         float: left;
-        min-height: 260px;
+        min-height: 120px;
         clear: both;
         margin-top: 10px;
         margin-bottom: 0;
@@ -159,7 +165,8 @@ export default {
         return {
             id: null,
             tableName: '',
-            reportData: {},
+            repeat: '',
+            presql: '',
             curField: {
                 name: '',
                 value: '',
@@ -187,10 +194,11 @@ export default {
             let arg = {
                 t: this.tableName,
                 filter: this.updateFields,
-                r: 100
+                r: this.repeat,
+                presql: this.presql
             };
             let result = mockUpdate(arg);
-            this.output = `${result.join('\n')}`;
+            this.output = `${this.presql}\n${result.join('\n')}`;
             tasks.add(new Task({
                 type: 'update',
                 tbname: arg.t,
