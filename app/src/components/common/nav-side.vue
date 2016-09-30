@@ -20,7 +20,7 @@
                     <router-link to="/history" :class="{'active': isActive === 'history'}"><i class="fa fa-fw fa-history"></i>历史</router-link>
                 </li>
                 <li>
-                    <a :class="{'active': isActive === 'help'}"><i class="fa fa-fw fa-question-circle-o"></i>帮助</a>
+                    <router-link to="/help" :class="{'active': isActive === 'help'}"><i class="fa fa-fw fa-question-circle-o"></i>帮助</router-link>
                 </li>
             </ul>
         </div>
@@ -75,8 +75,6 @@
 
 </style>
 <script>
-import actions from 'actions';
-import store from 'store';
 import jQuery from 'jquery';
 export default {
     name: 'nav-slide',
@@ -88,16 +86,6 @@ export default {
         return {
             isActive: ''
         };
-    },
-    vuex: {
-        getters: {
-            sideNavShow: () => store.state.sideNavShow
-        }
-    },
-    methods: {
-        controlSideNav() {
-            actions.controlSideNav(store, !this.sideNavShow);
-        }
     },
     watch: {
         '$route.path': {

@@ -55,6 +55,9 @@ let config = {
           limit: 10000,
           name: 'fonts/[name].[hash:7].[ext]'
         }
+      },
+      { test: /\.md$/, 
+        loader: "html!markdown" 
       }
     ]
   },
@@ -76,7 +79,7 @@ let config = {
       'components': path.join(__dirname, 'app/src/components'),
       'src': path.join(__dirname, 'app/src'),
       'store': path.join(__dirname, 'app/src/vuex/store.js'),
-      'actions': path.join(__dirname, 'app/src/vuex/actions.js')
+      'readme': path.join(__dirname, './README.md')
     },
     extensions: ['', '.js', '.vue', '.json', '.css'],
     fallback: [path.join(__dirname, 'app/node_modules')]
