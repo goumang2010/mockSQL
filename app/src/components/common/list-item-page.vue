@@ -321,7 +321,7 @@ export default {
             }
         },
         showTip(item) {
-            let text = `类型：${item.type}<br>表名：${item.tbname || '--'}<br>时间：${new Date(item.date).toLocaleString()}`;
+            let text = `类型：${item.type}<br>表名：${item.tbname || '--'}<br>模型地址：${item.argv._ ? item.argv._[0] : '--'}<br>循环次数：${item.argv.r}<br>时间：${new Date(item.date).toLocaleString()}`;
             let config = {
                 show: true,
                 style: 'tip',
