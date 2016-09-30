@@ -10,7 +10,7 @@
   body { height: 100%; }
   body {
     align-items: center;
-    background: url('./assets/img/bg.jpg') no-repeat;
+    background: url('./assets/img/bg.jpg');
     background-position: center;
     display: flex;
     font-family: Lato, Helvetica, sans-serif;
