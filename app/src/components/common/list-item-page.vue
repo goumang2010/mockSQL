@@ -122,7 +122,7 @@ ul.content-list>li:last-child {
 ul.content-list>li {
     border-color: #f0f0f0;
     font-size: 15px;
-    color: #5c5c5c;
+    color: #eee;
     text-align: left;
 }
 
@@ -131,7 +131,7 @@ ul.content-list>li .title {
 }
 
 ul.content-list>li a {
-    color: #333
+    color: #fff;
 }
 
 ul.content-list>li .description p {

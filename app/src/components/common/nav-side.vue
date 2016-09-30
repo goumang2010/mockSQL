@@ -47,6 +47,7 @@
     color: #eee;
     margin: 10px 5px;
     cursor: pointer;
+    opacity: 0.9;
 }
 
 .side-nav li a:hover,
@@ -54,7 +55,6 @@
 .side-nav li a:focus {
     outline: none;
     background-color: #000 !important;
-    opacity: 0.8;
     color: #eee;
 }
 

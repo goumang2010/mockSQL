@@ -33,7 +33,7 @@
 }
 .nav-links li.active a {
     border-bottom: 2px solid #4a8bee;
-    color: #000;
+    color: #fff;
 }
 </style>
 <script>

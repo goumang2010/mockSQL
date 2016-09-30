@@ -24,7 +24,7 @@
     border-radius: 4px;
     color: rgb(255, 255, 255); 
     padding: 5px; 
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 .tip p {
     text-align: left;
