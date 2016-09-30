@@ -15,6 +15,11 @@ export default [
         component: require('components/history')
     },
     {
+        path: '/help',
+        name: 'help',
+        component: require('components/help')
+    },
+    {
         path: '*',
         redirect: '/insert'
     }
