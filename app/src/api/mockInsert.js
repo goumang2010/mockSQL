@@ -3,7 +3,7 @@ import {formatDate} from '../util/common';
 import {mockData, convertSQLtoSchema} from './mockInsert.cli.js';
 import {getModule, getContent} from '../util/broswer.js';
 
-export default function(argv) {
+export default async function(argv) {
     let i = 0;
     let tbname = argv.t || 'table_name';
     let result = [];
@@ -24,9 +24,9 @@ export default function(argv) {
     }
     let filter = argv.filter;
     let times = parseInt(argv.r) || 10;
-    argv._files.forEach((x) => {
-        let schema = processPath(x);
+    for (let x of argv._files) {
         try {
+            let schema = await processPath(x);
             for (i = 0; i < times; i++) {
                 let res = mockData(i, tbname, schema, filter);
                 result.push(res);
@@ -35,6 +35,5 @@ export default function(argv) {
             console.log(err);
         }
     }
-    );
     return result;
 };

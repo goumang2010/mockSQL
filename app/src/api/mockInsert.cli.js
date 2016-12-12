@@ -56,7 +56,7 @@ function getValue(i, schemaKey) {
                 schemaKey = Date;
                 break;
             }
-            return getValue(schemaKey);
+            return getValue(i, schemaKey);
         } else {
             return '';
         }

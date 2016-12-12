@@ -2,7 +2,7 @@
 
 // var storage = process.env.PLATFORM_TARGET !== 'web' ? require('electron-json-storage') : require('../util/cookie.js');
 
-var storage = require('../util/cookie.js');
+var storage = require('../util/storage.js');
 
 function cacheGet(target, name, descriptor) {
     var oldFunc = descriptor.value;
@@ -75,6 +75,7 @@ export class Tasks {
     async init() {
         console.log('Tasks init');
         return new Promise((resolve, reject) => {
+            console.log(this.list);
             if (this.list) {
                 resolve(true);
             } else {
@@ -82,7 +83,8 @@ export class Tasks {
                     if (error) {
                         reject(error);
                     };
-                    this.list = Object.values(data) || [];
+                    console.log(data);
+                    this.list = data ? Object.values(data) : [];
                     console.log(this.list);
                     resolve(data);
                 });

@@ -260,7 +260,7 @@ export default {
                 r: this.taskInfo.r || 100,
                 presql: this.presql
             };
-            let result = mockInsert(arg);
+            let result = await mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
             tasks.add(new Task({
                 type: 'insert',

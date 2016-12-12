@@ -1,25 +1,23 @@
-export function getModule(file) {
+export async function getModule(file) {
     try {
-        let reader = new FileReader();
-        let text = reader.readAsText(file);
-        console.log(text);
+        let text = await getContent(file);
         let res = eval(text);
         return res;
     } catch (err) {
-        console.log(err);
+        return Promise.reject(err);
     }
 }
 
 export function getContent(file) {
-    return new Promise((r,j) => {
+    return new Promise((resolve, reject) => {
         try {
             let fr = new FileReader();
             fr.onload = function(e) {
-                r(e.target.result);
+                resolve(e.target.result);
             };
             fr.readAsText(file);
         } catch (err) {
-            j(err);
+            reject(err);
         }
     });
 }
