@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
-import Electron from 'vue-electron';
-Vue.use(Electron);
+// import Electron from 'vue-electron';
+// Vue.use(Electron);
 
 import Resource from 'vue-resource';
 Vue.use(Resource);

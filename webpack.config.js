@@ -68,7 +68,12 @@ let config = {
       template: './app/main.ejs',
       title: settings.name
     }),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"development"',
+      'process.env.VUE_ENV': '"development"',
+      'process.env': '{}'
+    })
   ],
   output: {
     filename: '[name].js',
@@ -87,7 +92,7 @@ let config = {
   resolveLoader: {
     root: path.join(__dirname, 'node_modules')
   },
-  target: 'electron-renderer',
+  target: 'web',
   vue: {
     autoprefixer: {
       browsers: ['last 2 Chrome versions']
