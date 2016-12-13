@@ -1,8 +1,6 @@
 // import * as storage from '../util/cookie.js';
 
-// var storage = process.env.PLATFORM_TARGET !== 'web' ? require('electron-json-storage') : require('../util/cookie.js');
-
-var storage = require('../util/storage.js');
+var storage = 'web' === 'web' ? require('../util/storage.js') : require('electron-json-storage');
 
 function cacheGet(target, name, descriptor) {
     var oldFunc = descriptor.value;

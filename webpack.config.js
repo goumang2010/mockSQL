@@ -70,9 +70,7 @@ let config = {
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"development"',
-      'process.env.VUE_ENV': '"development"',
-      'process.env': '{}'
+      'process.env.DEV_TARGET': '"${process.env.DEV_TARGET}"'
     })
   ],
   output: {
@@ -92,7 +90,7 @@ let config = {
   resolveLoader: {
     root: path.join(__dirname, 'node_modules')
   },
-  target: 'web',
+  target: process.env.DEV_TARGET === 'web' ? 'web' : 'electron-renderer',
   vue: {
     autoprefixer: {
       browsers: ['last 2 Chrome versions']

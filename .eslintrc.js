@@ -21,6 +21,7 @@ module.exports = {
     'generator-star-spacing': 0,
     'no-new-func' : 0,
     'no-eval': 0,
+    'no-self-compare': 0,
     'no-unused-vars': ['off'],
     'no-extend-native': ['error', {
       'exceptions': ['Object', 'Date', 'String', 'Array', 'Function']
