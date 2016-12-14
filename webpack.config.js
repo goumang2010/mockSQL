@@ -75,7 +75,7 @@ let config = {
   ],
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, 'app/dist')
+    path: process.env.DEV_TARGET === 'web' ? path.join(__dirname, 'builds/web') : path.join(__dirname, 'app/dist')
   },
   resolve: {
     alias: {
