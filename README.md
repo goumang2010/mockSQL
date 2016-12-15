@@ -1,10 +1,32 @@
 # mockSQL
 
+> 一个全端通用的demo
+
 > 通过读取数据模型，批量生成SQL语句，从而达到伪造数据的目的。
 
-> 使用[electron-vue](https://github.com/SimulatedGREG/electron-vue)构建。
+> electron版使用[electron-vue](https://github.com/SimulatedGREG/electron-vue)构建。
 
 ## 使用
+
+### Web版本
+访问http://sql.chuune.cn/
+
+``` bash
+git clone git@github.com:goumang2010/mockSQL.git
+
+cd mockSQL
+
+npm install
+
+npm run dev:web
+```
+或发布
+
+``` bash
+npm run publish
+```
+
+### electron版
 
 ``` bash
 git clone git@github.com:goumang2010/mockSQL.git
