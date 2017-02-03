@@ -9,9 +9,13 @@
     "build:linux": "cross-env PLATFORM_TARGET=linux node tasks/release.js",
     "build:mas": "cross-env PLATFORM_TARGET=mas node tasks/release.js",
     "build:win32": "cross-env PLATFORM_TARGET=win32 node tasks/release.js",
+    "dev:web": "node tasks/runner.js -w",
     "dev": "node tasks/runner.js",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter app",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix app",
+    "pack:web": "cross-env NODE_ENV=production DEV_TARGET=web webpack -p --progress --colors",
+    "gitpage": "git add -f builds/web&& git commit -m build-gitpage && git subtree push -P builds/web origin gh-pages",
+    "publish": "node tasks/pre-webrelease.js && npm run pack:web && npm run gitpage",
     "pack": "cross-env NODE_ENV=production webpack -p --progress --colors",
     "postinstall": "npm run lint:fix && cd app && npm install",
     "vue:route": "node tasks/vue/route.js",
@@ -51,6 +55,7 @@
     "html-webpack-plugin": "^2.16.1",
     "json-loader": "^0.5.4",
     "markdown-loader": "^0.1.7",
+    "ora": "^0.3.0",
     "style-loader": "^0.13.1",
     "tree-kill": "^1.1.0",
     "url-loader": "^0.5.7",
@@ -59,7 +64,7 @@
     "vue-loader": "next",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {}
 }

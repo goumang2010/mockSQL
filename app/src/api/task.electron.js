@@ -1,6 +1,4 @@
-// import * as storage from '../util/cookie.js';
-
-var storage = 'web' === 'web' ? require('../util/storage.js') : require('electron-json-storage');
+const storage = require('electron-json-storage');
 
 function cacheGet(target, name, descriptor) {
     var oldFunc = descriptor.value;
@@ -71,9 +69,7 @@ export class Tasks {
         this.cache = {};
     }
     async init() {
-        console.log('Tasks init');
         return new Promise((resolve, reject) => {
-            console.log(this.list);
             if (this.list) {
                 resolve(true);
             } else {
@@ -81,9 +77,7 @@ export class Tasks {
                     if (error) {
                         reject(error);
                     };
-                    console.log(data);
-                    this.list = data ? Object.values(data) : [];
-                    console.log(this.list);
+                    this.list = Object.values(data);
                     resolve(data);
                 });
             }

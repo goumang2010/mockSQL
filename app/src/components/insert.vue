@@ -218,6 +218,7 @@ export default {
         return {
             id: null,
             fileName: '',
+            file: null,
             tasks: null,
             reportData: {},
             curField: {
@@ -252,13 +253,14 @@ export default {
         async creatTask() {
             let arg = {
                 _: [this.fileName],
+                _files: [this.file],
                 t: this.taskInfo.tbname,
                 f: this.taskInfo.modelType,
                 filter: this.taskInfo.fixedFields,
                 r: this.taskInfo.r || 100,
                 presql: this.presql
             };
-            let result = mockInsert(arg);
+            let result = await mockInsert(arg);
             this.output = `${this.taskInfo.preSQL.replace(/[\s]+$/g, '\n')}${result.join('\n')}`;
             tasks.add(new Task({
                 type: 'insert',
@@ -268,7 +270,11 @@ export default {
             this.$store.dispatch('freshTasksList');
         },
         getFileName(e) {
-            let filename = e.target.files[0].path;
+            let file = e.target.files[0];
+            console.log(e.target.files);
+            this.file = file;
+            let filename = file.path || file.name;
+            console.log();
             this.fileName = filename;
             let extname = path.extname(filename).toLowerCase();
             let basename = path.basename(filename, extname);

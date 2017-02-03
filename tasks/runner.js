@@ -11,6 +11,7 @@ let YELLOW = '\x1b[33m'
 let BLUE = '\x1b[34m'
 let END = '\x1b[0m'
 
+let isWeb = !!process.argv.slice(2).find(x => (x === '--target=web'||x === '-w'));
 let isElectronOpen = false
 
 function format (command, data, color) {
@@ -38,10 +39,12 @@ function run (command, color, name) {
      *
      * NOTE: needs more testing for stability
      */
-    if (/VALID/g.test(data.toString().trim().replace(/\n/g, '\n' + repeat(' ', command.length + 2))) && !isElectronOpen) {
-      console.log(`${BLUE}Starting electron...\n${END}`)
-      run('cross-env NODE_ENV=development electron app/electron.js', BLUE, 'electron')
-      isElectronOpen = true
+    if (!isWeb) {
+      if (/VALID/g.test(data.toString().trim().replace(/\n/g, '\n' + repeat(' ', command.length + 2))) && !isElectronOpen) {
+        console.log(`${BLUE}Starting electron...\n${END}`)
+        run('cross-env NODE_ENV=development electron app/electron.js', BLUE, 'electron')
+        isElectronOpen = true
+      }
     }
   })
 
@@ -57,5 +60,9 @@ function exit (code) {
   })
 }
 
+if (isWeb) {
+  process.env.DEV_TARGET = 'web';
+}
+
 console.log(`${YELLOW}Starting webpack-dev-server...\n${END}`)
-run(`webpack-dev-server --inline --hot --colors --port ${config.port} --content-base app/dist`, YELLOW, 'webpack')
+run(`${isWeb ? `start http://localhost:${config.port} & ` : ''} webpack-dev-server --inline --hot --colors --port ${config.port} --content-base app/dist`, YELLOW, 'webpack')
