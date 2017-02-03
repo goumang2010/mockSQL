@@ -30,7 +30,7 @@ function createWindow () {
   if (process.env.NODE_ENV === 'development') {
     BrowserWindow.addDevToolsExtension(path.join(__dirname, '../node_modules/devtron'))
 
-    let installExtension = require('electron-devtools-installer')
+    let installExtension = require('electron-devtools-offline')
 
     installExtension.default(installExtension.VUEJS_DEVTOOLS)
       .then((name) => mainWindow.webContents.openDevTools())
