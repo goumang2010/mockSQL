@@ -61,6 +61,9 @@ execSync('npm run pack:web');
 
 console.log('pack web completed')
 
+//build CNAME
+fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
+
 try {
 	execSync('git add --all -f builds/web&& git commit -m build-gitpage');
 	execSync('git subtree pull -P builds/web ' + pushparam);
@@ -70,6 +73,3 @@ try {
 
 
 execSync('git subtree push -P builds/web ' + pushparam);
-
-//build CNAME
-fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
