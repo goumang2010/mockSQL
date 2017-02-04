@@ -42,7 +42,7 @@ function makeSubtree() {
 			execSync('git subtree add -P builds/web ' +  pushparam).stdout.pipe(process.stdout);
 
 		} catch (err) {
-			console.log(err);
+			console.log(err.message);
 		}
 		
 		fs.writeFileSync(path.join(__dirname, './dont-delete'), "Just check subtree status. Please do not delete.");
@@ -62,14 +62,14 @@ makeSubtree();
 console.log('pack web completed')
 
 try {
-	execSync('git add --all -f builds/web&& git commit -m build-gitpage').stdout.pipe(process.stdout);
-	execSync('git subtree pull -P builds/web ' + pushparam).stdout.pipe(process.stdout);
+	execSync('git add --all -f builds/web&& git commit -m build-gitpage');
+	execSync('git subtree pull -P builds/web ' + pushparam);
 } catch (err) {
-	console.log(err);
+	console.log(err.message);
 }
 
 
-execSync('git subtree push -P builds/web ' + pushparam).stdout.pipe(process.stdout);
+execSync('git subtree push -P builds/web ' + pushparam);
 
 //build CNAME
 fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
