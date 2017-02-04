@@ -7,21 +7,18 @@ const webpack = require('webpack')
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const eslintFriendlyFormatter = require('eslint-friendly-formatter')
 
 let config = {
   devtool: '#eval-source-map',
-  eslint: {
-    formatter: require('eslint-friendly-formatter')
-  },
   entry: {
     build: path.join(__dirname, 'app/src/main.js')
   },
   module: {
-    preLoaders: [],
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader'})
       },
       {
         test: /\.html$/,
@@ -38,7 +35,16 @@ let config = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+          autoprefixer: {
+            browsers: ['last 2 Chrome versions']
+          },
+          loaders: {
+            sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
+            scss: 'vue-style-loader!css-loader!sass-loader'
+          }
+        }
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -57,12 +63,12 @@ let config = {
         }
       },
       { test: /\.md$/, 
-        loader: "html!markdown" 
+        loader: "html-loader!markdown-loader" 
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin({filename: 'styles.css'}),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './app/main.ejs',
@@ -79,27 +85,19 @@ let config = {
   },
   resolve: {
     alias: {
+      'vue$': 'vue/dist/vue.common.js',
       'components': path.join(__dirname, 'app/src/components'),
       'src': path.join(__dirname, 'app/src'),
       'store': path.join(__dirname, 'app/src/vuex/store.js'),
       'readme': path.join(__dirname, './README.md')
     },
-    extensions: ['', '.js', '.vue', '.json', '.css'],
-    fallback: [path.join(__dirname, 'app/node_modules')]
+    extensions: ['.js', '.vue', '.json', '.css'],
+    modules: [
+      path.join(__dirname, 'app/node_modules'),
+      path.join(__dirname, 'node_modules')
+    ]
   },
-  resolveLoader: {
-    root: path.join(__dirname, 'node_modules')
-  },
-  target: process.env.DEV_TARGET === 'web' ? 'web' : 'electron-renderer',
-  vue: {
-    autoprefixer: {
-      browsers: ['last 2 Chrome versions']
-    },
-    loaders: {
-      sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
-      scss: 'vue-style-loader!css-loader!sass-loader'
-    }
-  }
+  target: process.env.DEV_TARGET === 'web' ? 'web' : 'electron-renderer'
 }
 
 if (process.env.NODE_ENV !== 'production') {
@@ -107,14 +105,16 @@ if (process.env.NODE_ENV !== 'production') {
    * Apply ESLint
    */
   if (settings.eslint) {
-    config.module.preLoaders.push(
+    config.module.rules.push(
       {
         test: /\.js$/,
         loader: 'eslint-loader',
+        enforce: "pre",
         exclude: /node_modules/
       },
       {
         test: /\.vue$/,
+        enforce: "pre",
         loader: 'eslint-loader'
       }
     )
@@ -131,11 +131,14 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
       compress: {
         warnings: false
       }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
     })
   )
 }
