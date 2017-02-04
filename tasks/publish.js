@@ -57,6 +57,10 @@ function makeSubtree() {
 
 makeSubtree();
 
+execSync('git subtree pull -P builds/web ' + pushparam);
+execSync('git pull ' + pushparam);
+
+
 execSync('npm run pack:web');
 
 console.log('pack web completed')
@@ -66,11 +70,9 @@ fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
 
 try {
 	execSync('git add --all -f builds/web&& git commit -m build-gitpage');
-	execSync('git subtree pull -P builds/web ' + pushparam);
 	execSync('git push ' + pushparam);
 } catch (err) {
-	console.log(err.message);
+	// console.log(err.message);
 }
-
 
 execSync('git subtree push -P builds/web ' + pushparam);
