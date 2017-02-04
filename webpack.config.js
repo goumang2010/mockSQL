@@ -74,10 +74,11 @@ let config = {
       template: './app/main.ejs',
       title: settings.name
     }),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.DEV_TARGET': '"${process.env.DEV_TARGET}"'
-    })
+    }),
+    new webpack.NamedModulesPlugin()
   ],
   output: {
     filename: '[name].js',
