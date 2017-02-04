@@ -25,15 +25,22 @@ export default async function(argv) {
     let filter = argv.filter;
     let times = parseInt(argv.r) || 10;
     for (let x of argv._files) {
-        try {
-            let schema = await processPath(x);
-            for (i = 0; i < times; i++) {
-                let res = mockData(i, tbname, schema, filter);
-                result.push(res);
+        result.push((async function() {
+            let _res = [];
+            try {
+                let schema = await processPath(x);
+                for (i = 0; i < times; i++) {
+                    let res = mockData(i, tbname, schema, filter);
+                    _res.push(res);
+                }
+            } catch (err) {
+                console.log(err);
             }
-        } catch (err) {
-            console.log(err);
-        }
+            return _res;
+        })());
     }
+    result = (await Promise.all(result)).reduce((pre, cur) => {
+        return pre.concat(cur);
+    });
     return result;
 };
