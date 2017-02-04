@@ -14,7 +14,7 @@ function makeSubtree() {
 	if (!fs.existsSync(path.join(__dirname, './dont-delete'))) {
 		let spinner = ora(`Doing some preparation work ...`).start();
 		if (fs.readdirSync(dirpath).length > 1) {
-			execSync(os.platform() === 'win32' ? `rd /q ${dirpath}` : `rm -rf ${dirpath}`);
+			execSync(os.platform() === 'win32' ? `rd /q/s ${dirpath}` : `rm -rf ${dirpath}`);
 			execSync(`git add builds/web && git commit -m "clean web dist"`);
 		}
 		try {
