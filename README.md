@@ -1,4 +1,4 @@
-# mockSQL
+[![Build Status][travis-image]][travis-url]
 
 > 一个全端通用的demo
 
@@ -129,3 +129,6 @@ More information can be found [here](https://simulatedgreg.gitbooks.io/electron-
 ---
 
 This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+
+[travis-image]: https://img.shields.io/travis/goumang2010/mockSQL.svg?style=flat-square
+[travis-url]: https://travis-ci.org/goumang2010/mockSQL
