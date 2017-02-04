@@ -67,6 +67,7 @@ fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
 try {
 	execSync('git add --all -f builds/web&& git commit -m build-gitpage');
 	execSync('git subtree pull -P builds/web ' + pushparam);
+	execSync('git push ' + pushparam);
 } catch (err) {
 	console.log(err.message);
 }
