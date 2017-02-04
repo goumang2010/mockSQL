@@ -8,7 +8,7 @@ export async function getModule(file) {
     }
 }
 
-export function getContent(file) {
+export async function getContent(file) {
     return new Promise((resolve, reject) => {
         try {
             let fr = new FileReader();

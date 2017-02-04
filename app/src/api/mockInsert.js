@@ -13,8 +13,8 @@ export default async function(argv) {
         processPath = getModule;
         break;
     case 2:
-        processPath = (spath) => {
-            let content = getContent(spath);
+        processPath = async (spath) => {
+            let content = await getContent(spath);
             return convertSQLtoSchema(content);
         };
         break;
