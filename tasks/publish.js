@@ -57,7 +57,7 @@ function makeSubtree() {
 
 makeSubtree();
 
-// execSync('npm run pack:web');
+execSync('npm run pack:web');
 
 console.log('pack web completed')
 
