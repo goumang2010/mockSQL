@@ -15,7 +15,8 @@ function makeSubtree() {
 		let spinner = ora(`Doing some preparation work ...`).start();
 		if (fs.readdirSync(dirpath).length > 1) {
 			execSync(os.platform() === 'win32' ? `rd /q/s ${dirpath}` : `rm -rf ${dirpath}`);
-			execSync(`git add builds/web && git commit -m "clean web dist"`);
+			fs.mkdirSync(dirpath);
+			execSync(`git add . && git commit -m "clean workspace for add subtree"`);
 		}
 		try {
 			execSync('git subtree add -P builds/web origin gh-pages').stdout.pipe(process.stdout);
