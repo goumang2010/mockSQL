@@ -14,10 +14,10 @@
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter app",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix app",
     "pack:web": "cross-env NODE_ENV=production DEV_TARGET=web webpack -p --progress --colors",
-    "gitpage": "git add -f builds/web&& git commit -m build-gitpage && git subtree push -P builds/web origin gh-pages",
-    "publish": "node tasks/pre-webrelease.js && npm run pack:web && npm run gitpage",
+    "gitpage": "git add --all -f builds/web&& git commit -m build-gitpage && git subtree push -P builds/web origin gh-pages",
+    "publish": "node tasks/publish.js",
     "pack": "cross-env NODE_ENV=production webpack -p --progress --colors",
-    "postinstall": "npm run lint:fix && cd app && npm install",
+    "postinstall": "npm run lint:fix && cd app && npm install && cd ..",
     "vue:route": "node tasks/vue/route.js",
     "vuex:module": "node tasks/vuex/module.js"
   },
