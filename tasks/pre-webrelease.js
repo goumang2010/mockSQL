@@ -13,13 +13,30 @@ function makeSubtree() {
 
 	if (!fs.existsSync(path.join(__dirname, './dont-delete'))) {
 		let spinner = ora(`Doing some preparation work ...`).start();
-		if (fs.readdirSync(dirpath).length > 1) {
-			execSync(os.platform() === 'win32' ? `rd /q/s ${dirpath}` : `rm -rf ${dirpath}`);
-			fs.mkdirSync(dirpath);
-			execSync(`git add . && git commit -m "clean workspace for add subtree"`);
-		}
+
 		try {
-			execSync('git subtree add -P builds/web origin gh-pages').stdout.pipe(process.stdout);
+			var args = {
+				name: 'goumang2010',
+				email: 'goumang2010@live.com',
+				repo: {
+					url: 'origin',
+					branch: 'gh-pages'
+				}
+			};
+			
+			if(process.env.GH_REF) {
+				args.repo.url = 'https://' + process.env.GH_TOKEN + '@' + process.env.GH_REF;
+				execSync('git config user.name ' + args.name);
+				execSync('git config user.email ' + args.email);
+			}
+
+			if (fs.readdirSync(dirpath).length > 1) {
+				execSync(os.platform() === 'win32' ? `rd /q/s ${dirpath}` : `rm -rf ${dirpath}`);
+				fs.mkdirSync(dirpath);
+				execSync(`git add . && git commit -m "clean workspace for add subtree"`);
+			}
+
+			execSync('git subtree add -P builds/web ' +  args.repo.url + ' HEAD:' + args.repo.branch).stdout.pipe(process.stdout);
 		} catch (err) {
 			console.log(err);
 		}
