@@ -57,13 +57,15 @@ function makeSubtree() {
 
 makeSubtree();
 
-execSync('git subtree pull -P builds/web ' + pushparam);
-execSync('git pull ' + pushparam);
-
+try {
+	execSync('git subtree pull -P builds/web ' + pushparam);
+} catch (err) {
+	// console.log(err.message);
+}
 
 execSync('npm run pack:web');
 
-console.log('pack web completed')
+console.log('web built completed')
 
 //build CNAME
 fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
