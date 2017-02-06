@@ -5,7 +5,6 @@ app/dist/index.html
 app/dist/build.js
 builds/*
 node_modules
-npm-debug.log
-npm-debug.log.*
+*debug.log*
 thumbs.db
 !.gitkeep
