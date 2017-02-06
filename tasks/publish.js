@@ -4,6 +4,11 @@ var { exec, execSync } = require('child_process');
 var os = require('os');
 var ora = require('ora');
 
+let _exeSync = execSync;
+execSync = function(cmd) {
+	console.log(cmd);
+	return _exeSync(cmd);
+}
 
 let dirpath = path.join(__dirname, '../builds/web');
 var args = {
@@ -70,11 +75,8 @@ console.log('web built completed')
 //build CNAME
 fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
 
-try {
-	execSync('git add --all -f builds/web&& git commit -m build-gitpage');
-	execSync('git push ' + args.repo.url + ' master');
-} catch (err) {
-	// console.log(err.message);
-}
+execSync('git add --all -f builds/web&& git commit -m build-gitpage');
+
+execSync('git push ' + args.repo.url + ' master');
 
 execSync('git subtree push -P builds/web ' + pushparam);
