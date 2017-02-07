@@ -29,11 +29,10 @@ if (process.env.GH_REF) {
 	args.repo.url = 'myrepo';
 }
 
-
 function makeSubtree() {
-	let spinner = ora(`Doing some preparation work ...`).start();
-
-	try {
+	var spinner = ora(`Doing some preparation work ...`).start();
+	console.log('...');
+	var cleanSubtree = function() {
 		if (fs.existsSync(dirpath)) {
 			if (fs.readdirSync(dirpath).length > 1) {
 				execSync(os.platform() === 'win32' ? `rd /q/s ${dirpath}` : `rm -rf ${dirpath}`);
@@ -43,19 +42,24 @@ function makeSubtree() {
 				fs.rmdirSync(dirpath);
 			}
 		}
-
-		execSync('git subtree add -P builds/web ' + args.repo.url + '/' + args.repo.branch);
-
-	} catch (err) {
-		console.log(err.message);
 	}
-
-
+	try {
+		cleanSubtree();
+		execSync('git subtree add -P builds/web ' + args.repo.url + '/' + args.repo.branch);
+	} catch (err) {
+		console.log('error happened: ' + err.message);
+		if (err.message.indexOf('does not refer to a commit') !== -1) {
+			execSync(`git subtree add -P builds/web HEAD --squash`);
+			cleanSubtree();
+		} else {
+			throw new Error('Can not establish suntree');
+		}
+	}
 	spinner.stop();
 }
 
-
 makeSubtree();
+
 
 // try {
 // 	execSync('git subtree pull -P builds/web ' + pushparam);
@@ -71,6 +75,7 @@ console.log('web built completed')
 fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
 
 execSync('git add --all -f builds/web&& git commit -m build-gitpage');
+
 
 // execSync('git push ' + args.repo.url + ' master');
 
