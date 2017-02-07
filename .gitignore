@@ -1,8 +1,0 @@
-.DS_Store
-app/dist/*
-dont-delete
-app/dist/index.html
-app/dist/build.js
-node_modules
-*debug.log*
-thumbs.db
