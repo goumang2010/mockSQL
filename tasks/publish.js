@@ -74,6 +74,8 @@ console.log('web built completed')
 //build CNAME
 fs.writeFileSync(path.join(dirpath, './CNAME'), "sql.chuune.cn");
 
+fs.writeFileSync(path.join(dirpath, './TIMESTAMP'), Date.now());
+
 execSync('git add --all -f builds/web&& git commit -m build-gitpage');
 
 
