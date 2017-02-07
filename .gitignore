@@ -1,6 +1,5 @@
 .DS_Store
 app/dist/*
-dont-delete
 app/dist/index.html
 app/dist/build.js
 builds/*
